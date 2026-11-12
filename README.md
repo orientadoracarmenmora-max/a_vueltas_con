@@ -2,6 +2,9 @@
 
 Abre `index.html` en tu navegador. Conserva `estilos.css` y `ruleta.js` en la misma carpeta. La ruleta funciona sin instalación, conexión a internet ni cuenta. La voz de Google puede necesitar internet. La ruleta abre en **Juego con puntos**, con tres preguntas de rocas volcánicas y sus respuestas listas para probar.
 
+
+La rueda hace clics suaves mientras gira. Puedes desactivarlos con **Apariencia → Sonido al girar**.
+
 ## Modos de juego
 
 - **Solo preguntas.** Pega una pregunta por línea o una lista numerada.
