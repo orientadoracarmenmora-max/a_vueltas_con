@@ -31,3 +31,5 @@ Al final de la configuración, en **Guardar o abrir una lista** puedes descargar
 1. Sube `index.html`, `estilos.css` y `ruleta.js` a la raíz de la rama `main` de tu repositorio.
 2. En **Settings → Pages**, elige **Deploy from a branch** y selecciona **main** y **/ (root)**.
 3. Guarda y abre la dirección que indique GitHub Pages cuando termine la publicación.
+
+El botón de información abre la guía. Incluye `instrucciones-a-vueltas-con.pdf` junto a los archivos de la aplicación para que se pueda descargar desde la web.
