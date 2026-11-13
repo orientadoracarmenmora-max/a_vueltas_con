@@ -1,6 +1,6 @@
 # A vueltas con
 
-Abre `index.html` en tu navegador. Conserva `estilos.css` y `ruleta.js` en la misma carpeta. La ruleta funciona sin instalación, conexión a internet ni cuenta. La voz de Google puede necesitar internet. La ruleta abre en **Juego con puntos**, con tres preguntas de rocas volcánicas y sus respuestas listas para probar.
+Abre `index.html` en tu navegador. Conserva `estilos.css` y `ruleta.js` en la misma carpeta. La ruleta funciona sin instalación, conexión a internet ni cuenta. La voz de Google puede necesitar internet. La ruleta abre en **Juego con puntos**, con seis preguntas sobre cómo usar la ruleta en clase y sus respuestas listas para probar.
 
 
 La rueda hace clics suaves mientras gira. Puedes desactivarlos con **Apariencia → Sonido al girar**.
@@ -8,7 +8,7 @@ La rueda hace clics suaves mientras gira. Puedes desactivarlos con **Apariencia 
 ## Modos de juego
 
 - **Solo preguntas.** Pega una pregunta por línea o una lista numerada.
-- **Preguntas y respuestas.** Numera cada pregunta y escribe su respuesta en la línea siguiente, por ejemplo `1. ¿Qué roca forma la corteza oceánica?` y debajo `Basalto`. También puedes poner la pareja en la misma línea, como `1. ¿Qué roca forma la corteza oceánica? / Basalto`. Deja un espacio a cada lado de la barra `/`. Puedes mezclar los formatos, editar las parejas y revelar la solución con **Mostrar respuesta**. La solución queda visible hasta el siguiente giro.
+- **Preguntas y respuestas.** Numera cada pregunta y escribe su respuesta en la línea siguiente, por ejemplo `1. ¿Cuál es la capital de Portugal?` y debajo `Lisboa`. También puedes poner la pareja en la misma línea, como `1. ¿Cuál es la capital de Portugal? / Lisboa`. Deja un espacio a cada lado de la barra `/`. Puedes mezclar los formatos, editar las parejas y revelar la solución con **Mostrar respuesta**. La solución queda visible hasta el siguiente giro.
 - **Juego con puntos.** Puedes jugar de forma individual, con un único marcador, o de 2 a 8 equipos. Los equipos se pueden identificar por colores, letras, números o animales. El turno avanza automáticamente al siguiente equipo. Antes de girar, puedes tocar la tarjeta de otro equipo en el marcador. El profesorado marca **✓ Acierto** (+1) o **✕ Fallo** (−1). Cada tres aciertos seguidos del mismo equipo se añaden 3 puntos y empieza otra racha. Un fallo corta la racha. El temporizador empieza activado con 30 segundos y puedes desmarcarlo. El reloj de arena y la cuenta atrás aparecen junto a la ruleta. Cuando el alumnado responda, pulsa el icono **Pausar tiempo** justo debajo de la pregunta. Puedes revelar la solución, marcar el resultado o reanudar la cuenta atrás. La arena baja al ritmo de la cuenta atrás y se queda quieta al parar el reloj. Al agotarse, registra un único fallo y pasa el turno. Las puntuaciones pueden bajar de cero.
 - Con **Sin repeticiones**, la partida termina al calificar la última pregunta. También puedes usar **Terminar partida** entre turnos. La clasificación muestra los empates. **Reiniciar partida** borra puntos y rachas para jugar de nuevo.
 
