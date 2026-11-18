@@ -43,3 +43,7 @@ Durante el juego, toca una opción para comprobarla. Activa **Jugar con puntos**
 En **＋ Añadir preguntas**, la opción **Abrir lista guardada** está disponible en los cuatro modos. Puedes abrir un archivo .json guardado desde la ruleta o cargar un .txt para revisar e importar su contenido.
 
 Al abrir la ruleta se cargan siempre los seis ejemplos de funcionamiento. Al cambiar de modo durante la demostración, los ejemplos se adaptan con sus soluciones. Las listas guardadas en el navegador se abren desde **Abrir lista de este navegador**.
+
+
+## Imágenes y revisión en un panel
+En los cuatro modos, Continuar abre la revisión. El ＋ junto al enunciado permite adjuntar una foto JPG, PNG o WebP (hasta 12 MB), que se optimiza a 1200 píxeles. La imagen de la solución aparece al mostrar o responder. Revisar y editar abre el mismo panel; Guardar cambios sustituye la lista sin duplicarla. Cerrar descarta los cambios sin guardar. Las imágenes y sus descripciones se incluyen en el JSON descargado.

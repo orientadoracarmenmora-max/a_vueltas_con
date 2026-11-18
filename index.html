@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf5ef">
   <title>A vueltas con…</title>
-  <link rel="stylesheet" href="estilos.css?v=intercambio-nueva-20261118-final">
-  <script src="ruleta.js?v=intercambio-nueva-20261118-final" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-3">
+  <script src="ruleta.js?v=imagenes-20261118-3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#stage">Ir a la ruleta</a>
@@ -39,7 +39,8 @@
 <p>Pulsa Continuar. Revisa los enunciados y las opciones, y marca el círculo a la derecha de la respuesta correcta de cada pregunta. Solo puedes marcar una por pregunta. Pulsa Importar preguntas para añadirlas a tu lista. La primera importación sustituye los ejemplos.</p>
 <p><strong>Verdadero o falso.</strong> Pega las afirmaciones numeradas, una por línea. Pulsa Continuar y marca Verdadero o Falso en cada afirmación. Después, pulsa Importar preguntas para sustituir la lista actual.</p>
 <p><strong>Ejemplo de afirmaciones.</strong> 1. Puedo practicar con el temporizador.<br>2. Para añadir preguntas tengo que cambiar el tema.</p>
-<p>Si falta una solución, la ventana te indica qué fila debes revisar. Puedes corregir las preguntas ya cargadas en Revisar y editar.</p>
+<p>Si falta una solución, la ventana te indica qué fila debes revisar. Revisar y editar vuelve a abrir este mismo panel con las preguntas, las soluciones y las imágenes. Pulsa Guardar cambios al terminar.</p>
+<p><strong>Imágenes.</strong> En los cuatro modos, pulsa Continuar y revisa las preguntas en el panel. En Tipo test y Verdadero o falso, marca también la correcta. Pulsa el ＋ junto a la pregunta para adjuntar una imagen. Debajo de las opciones puedes añadir una imagen de la solución. También puedes hacerlo en Revisar y editar. Admite JPG, PNG y WebP. Puedes cambiarla, quitarla y escribir una descripción. La imagen de la respuesta se muestra al revelar la solución o responder al test. Guardar lista incluye las imágenes en el mismo archivo .json para llevarlo al pendrive.</p>
 <h3>3. Jugar con puntos</h3>
 <p>Elige Sí o No en Jugar con puntos, en cualquiera de los cuatro modos. Con puntos puedes jugar en individual, con un marcador, o por equipos, de dos a ocho. Los equipos se identifican por colores, letras, números o animales.</p>
 <p>En Solo preguntas y Preguntas y respuestas, marca el tick de más uno para un acierto o la cruz de menos uno para un fallo. En Tipo test y Verdadero o falso, el resultado se registra automáticamente al elegir una opción.</p>
@@ -153,7 +154,7 @@
             </div>
             <div id="open-import" hidden>
               <label for="source">Pega aquí tu lista</label>
-              <p class="hint" id="source-help">Al importar se sustituye la lista actual.</p>
+              <p class="hint" id="source-help">Pulsa Continuar para revisar y añadir imágenes. Al importar se sustituye la lista actual.</p>
               <div class="source-examples">
                 <p class="example-title">Aquí tienes un ejemplo</p>
                 <div id="example-below">
@@ -169,7 +170,7 @@
                 </div>
               </div>
               <textarea id="source" rows="4" aria-describedby="source-help" placeholder="Pega aquí tu lista"></textarea>
-              <button class="secondary full" id="import" type="button">Importar preguntas</button>
+              <button class="secondary full" id="import" type="button">Continuar</button>
             </div>
             <section id="closed-import" hidden aria-labelledby="closed-import-title">
               <h3 id="closed-import-title">Preparar afirmaciones</h3>
@@ -324,6 +325,7 @@ C) Pulsando Mostrar respuesta</pre>
                 <span id="listen-icon" aria-hidden="true">🔊</span>
               </button>
             </div>
+            <img id="question-image" class="entry-image" alt="Imagen de la pregunta" hidden>
             <div id="closed-choices" class="closed-choices" role="group" aria-label="Opciones de respuesta" hidden></div>
           <p id="closed-feedback" class="closed-feedback" role="status"></p>
           <div class="result-controls">
@@ -336,6 +338,7 @@ C) Pulsando Mostrar respuesta</pre>
               </div>
               <button class="quiet" id="reveal" type="button" aria-controls="answer" hidden>Mostrar respuesta</button>
               <p id="answer" tabindex="-1" hidden></p>
+              <img id="answer-image" class="entry-image" alt="Imagen de la respuesta" hidden>
               <button class="quiet" id="listen-answer" type="button" hidden>🔊 Escuchar respuesta</button>
             </div>
           </div>
