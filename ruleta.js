@@ -546,6 +546,7 @@
         choices.append(button);
       });
     }
+    stage.classList.toggle('quiz-mode', isQuiz());
     stage.classList.toggle('visual-test', isQuiz() && Boolean(currentEntry?.options?.some((_, index) => entryImages(currentEntry, `option${index}`).length)));
     delete choices.dataset.answered;
   }
@@ -888,6 +889,7 @@
 
   function renderScoreboard() {
     const scores = $('scores');
+    scores.dataset.count = String(players.length);
     const focusedTeam = scores.contains(document.activeElement) ? document.activeElement.dataset.team : undefined;
     const teams = isTeamGame();
     $('scoreboard').toggleAttribute('data-dense', teams && players.length >= 5);

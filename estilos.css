@@ -964,3 +964,58 @@ input[type="text"] { width: 100%; }
   .visual-test.is-game .option-gallery img { height: 72px; }
   .visual-test.is-game #question-image .entry-image { height: 90px; max-height: 90px; }
 }
+
+@media (min-width: 760px) {
+  .visual-test .result:has(#question-image:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(115px, 34%); gap: .4rem .6rem; }
+  .visual-test .result:has(#question-image:not([hidden])) .question-row { grid-column: 1; grid-row: 1; align-self: center; }
+  .visual-test .result #question-image { grid-column: 2; grid-row: 1; align-self: center; margin: 0; }
+  .visual-test .result #question-image .entry-image { height: 140px; max-height: 140px; }
+  .visual-test.is-game .result #question-image .entry-image { height: 105px; max-height: 105px; }
+  .visual-test .result:has(#question-image:not([hidden])) :is(.closed-choices, .closed-feedback, .result-controls) { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .stage-card {
+    --wheel-diameter: clamp(15rem, min(47vh, calc(100vh - 24rem)), 32rem);
+    grid-template-areas: "heading heading heading" "speech speech speech" "wheel timer question" "spin timer question" "score . question" "actions actions actions";
+    grid-template-columns: minmax(0, var(--wheel-diameter)) clamp(5rem, 8vw, 7rem) minmax(0, min(43vw, 34rem));
+    grid-template-rows: auto auto auto auto 1fr auto;
+    column-gap: clamp(1rem, 2vw, 2rem);
+    row-gap: .35rem;
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard,
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard[data-dense] { width: 100%; justify-self: center; align-self: start; margin-top: .3rem; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard #scores,
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard[data-dense] #scores { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .25rem; padding: 0; max-height: none; overflow: visible; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard .score,
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard[data-dense] .score { display: block; min-height: 40px; padding: .2rem; font-size: .7rem; line-height: 1.05; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard .score strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .7rem; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard .score .streak { font-size: .6rem; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard .team-label-full { display: none; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard .team-label-short { display: inline; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) #turn-label { font-size: .8rem; margin: 0 0 .3rem; text-align: center; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .play-area .result { max-width: 34rem; align-self: start; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result #question-image .entry-image,
+  :is(.visual-test, .quiz-mode).is-game:is(:fullscreen, .projected) .result #question-image .entry-image { height: 130px; max-height: 130px; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .option-gallery img,
+  :is(.visual-test, .quiz-mode).is-game:is(:fullscreen, .projected) .option-gallery img { height: 90px; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .closed-choices button { font-size: 1rem; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) #question { font-size: 1.08rem; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result .question-row { display: block; position: relative; padding-right: 32px; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .question-audio { position: absolute; right: 0; top: 0; }
+}
+@media (min-width: 900px) and (min-height: 850px) {
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result #question-image .entry-image,
+  :is(.visual-test, .quiz-mode).is-game:is(:fullscreen, .projected) .result #question-image .entry-image { height: 180px; max-height: 180px; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .option-gallery img,
+  :is(.visual-test, .quiz-mode).is-game:is(:fullscreen, .projected) .option-gallery img { height: 125px; }
+}
+
+@media (min-width: 760px) {
+  .quiz-mode .closed-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
+  .quiz-mode .closed-choices:has(> button:nth-child(5)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .visual-test:not(:fullscreen, .projected) .result:has(#question-image:not([hidden])) { display: block; }
+  .visual-test:not(:fullscreen, .projected) .result #question-image { margin: .5rem 0; }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result .question-row { padding-right: 42px; }
+}
+
+@media (min-width: 760px) { #stage .scoreboard #scores[data-count="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

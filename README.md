@@ -52,3 +52,5 @@ El ＋ de la derecha admite una o varias imágenes JPG, PNG o WebP de hasta 12 M
 
 
 En Tipo test, cada opción tiene un ＋ a la derecha para sus propias imágenes. Al quitar o reordenar opciones, sus imágenes se mantienen asociadas. Las opciones ilustradas se presentan en dos columnas; con ocho equipos, se compactan las fotos y los marcadores para una pantalla de 1280 × 720. El modo de alto contraste conserva el texto y los símbolos de corrección.
+
+En pantalla completa, los equipos quedan debajo de la ruleta para ampliar las imágenes del enunciado y las opciones. Seis equipos se muestran en dos filas de tres.
