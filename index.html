@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf5ef">
   <title>A vueltas con…</title>
-  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-36">
-  <script src="ruleta.js?v=imagenes-20261118-36" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-39">
+  <script src="ruleta.js?v=imagenes-20261118-39" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#stage">Ir a la ruleta</a>
@@ -82,8 +82,9 @@ D) Basalto</pre><ol class="guide-steps"><li>Elige <b>Tipo test</b> y pulsa <b>A�
     <aside class="settings" aria-label="Configuración">
       <section class="card" aria-labelledby="setup-title">
         <div class="round-settings">
+
           <div>
-            <label for="mode">Modo de juego</label>
+            <label for="mode" id="setup-title">Modo de juego</label>
             <select id="mode" class="mode-select">
               <option value="questions">Solo preguntas</option>
               <option value="answers">Preguntas y respuestas</option>
@@ -91,13 +92,25 @@ D) Basalto</pre><ol class="guide-steps"><li>Elige <b>Tipo test</b> y pulsa <b>A�
               <option value="binary">Verdadero o falso</option>
             </select>
           </div>
+          <div class="question-actions">
           <button class="secondary full" id="open-question-editor" type="button" aria-haspopup="dialog" aria-controls="question-editor">＋ Añadir preguntas</button>
+        <details class="editor">
+          <summary>Revisar y editar <span id="total" class="count"></span></summary>
+          <div id="question-list"></div>
+          <button class="quiet add" id="add" type="button">＋ Añadir pregunta</button>
+        </details>
+          <label class="check"><input id="no-repeat" type="checkbox" checked> Sin repeticiones</label>
+          </div>
           <div>
             <label for="scoring-enabled">Jugar con puntos</label>
             <select id="scoring-enabled">
               <option value="no">No</option>
               <option value="yes" selected>Sí</option>
             </select>
+          </div>
+          <div>
+            <label for="topic">Título de la partida</label>
+            <input id="topic" type="text" maxlength="90" placeholder="Escribe el tema de tu partida">
           </div>
           <div>
             <label class="check"><input id="timed" type="checkbox" checked> Usar temporizador</label>
@@ -107,12 +120,8 @@ D) Basalto</pre><ol class="guide-steps"><li>Elige <b>Tipo test</b> y pulsa <b>A�
             </div>
           </div>
           <label class="check"><input id="wheel-sound" type="checkbox" checked> Sonido al girar</label>
-          <div>
-            <label for="topic">Título de la partida</label>
-            <input id="topic" type="text" maxlength="90" placeholder="Escribe el tema de tu partida">
-          </div>
+
         </div>
-        <h2 id="setup-title" class="questions-title">Preguntas</h2>
         <dialog id="question-editor" class="guide" aria-labelledby="question-editor-title">
           <form method="dialog" class="guide-header">
             <h2 id="question-editor-title">Añadir preguntas</h2>
@@ -179,13 +188,8 @@ C) Pulsando Mostrar respuesta</pre>
           </div>
         </dialog>
         <p class="notice" id="notice" role="status"></p>
-        <details class="editor">
-          <summary>Revisar y editar <span id="total" class="count"></span></summary>
-          <div id="question-list"></div>
-          <button class="quiet add" id="add" type="button">＋ Añadir pregunta</button>
-        </details>
-        <div class="rule"></div>
-        <label class="check"><input id="no-repeat" type="checkbox" checked> Sin repeticiones</label>
+
+
       </section>
       <section class="card" id="game-settings" aria-labelledby="game-title" hidden>
         <h2 id="game-title">Partida</h2>

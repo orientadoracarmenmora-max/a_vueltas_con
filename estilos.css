@@ -1134,3 +1134,7 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
   :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result:has(#question-image:not([hidden])) #question-image { grid-column: 2; grid-row: 1; }
   :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result:has(#question-image:not([hidden])) .question-audio { grid-column: 3; grid-row: 1; }
 }
+
+.question-actions { display: grid; gap: .75rem; }
+.question-actions .editor { margin: 0; }
+.question-actions .editor > summary { min-height: 44px; padding: .6rem .2rem; }
