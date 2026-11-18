@@ -1188,3 +1188,32 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 @media (min-width: 741px) and (max-height: 780px) {
   :root[data-font="peach"] .stage:is(:fullscreen, .projected) #stage-title { font-size: clamp(1.95rem, 3.8vw, 3.35rem); }
 }
+
+/* Mantener centrado el marcador respecto a la rueda y al rótulo del turno. */
+@media (min-width: 900px) {
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard #scores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .4rem;
+    margin-inline: auto;
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard #scores[data-count="2"] {
+    max-width: 22rem;
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard #scores li {
+    flex-basis: calc((100% - (var(--team-columns) - 1) * .4rem) / var(--team-columns));
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard #turn-label {
+    width: 100%; margin-block: .3rem .55rem; text-align: center;
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .play-area .result {
+    width: 100%; justify-self: center; padding: clamp(.85rem, 1.4vw, 1.4rem);
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .result #question {
+    max-width: 45ch; justify-self: center; text-align: center; line-height: 1.5;
+  }
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .closed-choices {
+    gap: .65rem; margin-top: .85rem;
+  }
+}
