@@ -45,5 +45,7 @@ En **＋ Añadir preguntas**, la opción **Abrir lista guardada** está disponib
 Al abrir la ruleta se cargan siempre los seis ejemplos de funcionamiento. Al cambiar de modo durante la demostración, los ejemplos se adaptan con sus soluciones. Las listas guardadas en el navegador se abren desde **Abrir lista de este navegador**.
 
 
-## Imágenes y revisión en un panel
-En los cuatro modos, Continuar abre la revisión. El ＋ junto al enunciado permite adjuntar una foto JPG, PNG o WebP (hasta 12 MB), que se optimiza a 1200 píxeles. La imagen de la solución aparece al mostrar o responder. Revisar y editar abre el mismo panel; Guardar cambios sustituye la lista sin duplicarla. Cerrar descarta los cambios sin guardar. Las imágenes y sus descripciones se incluyen en el JSON descargado.
+## Panel de preparación y revisión
+Añadir preguntas empieza con el bloque de texto y Continuar. Después aparecen las tarjetas editables. Los cambios en el bloque y en las tarjetas se sincronizan. La × del enunciado borra la pregunta completa; la × de una respuesta elimina solo esa respuesta. Se pueden añadir preguntas y opciones. Revisar y editar abre el mismo panel con la lista actual. Cerrar descarta los cambios; Guardar cambios los aplica.
+
+El ＋ de la derecha admite una o varias imágenes JPG, PNG o WebP de hasta 12 MB cada una; se optimizan a 1200 píxeles. Cada foto se puede cambiar o quitar por separado. Una se centra y varias se distribuyen en dos columnas. Las fotos de la solución se muestran al responder o revelar la solución. El JSON incluye todas las fotos y el modo de juego; al abrirlo desde cualquier apartado cambia automáticamente de modo.

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf5ef">
   <title>A vueltas con…</title>
-  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-3">
-  <script src="ruleta.js?v=imagenes-20261118-3" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-9">
+  <script src="ruleta.js?v=imagenes-20261118-9" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#stage">Ir a la ruleta</a>
@@ -40,7 +40,7 @@
 <p><strong>Verdadero o falso.</strong> Pega las afirmaciones numeradas, una por línea. Pulsa Continuar y marca Verdadero o Falso en cada afirmación. Después, pulsa Importar preguntas para sustituir la lista actual.</p>
 <p><strong>Ejemplo de afirmaciones.</strong> 1. Puedo practicar con el temporizador.<br>2. Para añadir preguntas tengo que cambiar el tema.</p>
 <p>Si falta una solución, la ventana te indica qué fila debes revisar. Revisar y editar vuelve a abrir este mismo panel con las preguntas, las soluciones y las imágenes. Pulsa Guardar cambios al terminar.</p>
-<p><strong>Imágenes.</strong> En los cuatro modos, pulsa Continuar y revisa las preguntas en el panel. En Tipo test y Verdadero o falso, marca también la correcta. Pulsa el ＋ junto a la pregunta para adjuntar una imagen. Debajo de las opciones puedes añadir una imagen de la solución. También puedes hacerlo en Revisar y editar. Admite JPG, PNG y WebP. Puedes cambiarla, quitarla y escribir una descripción. La imagen de la respuesta se muestra al revelar la solución o responder al test. Guardar lista incluye las imágenes en el mismo archivo .json para llevarlo al pendrive.</p>
+<p><strong>Imágenes.</strong> En los cuatro modos, pulsa Continuar y revisa las preguntas en el panel. En Tipo test y Verdadero o falso, marca también la correcta. Pulsa el ＋ junto a la pregunta para adjuntar una imagen. Debajo de las opciones puedes añadir una imagen de la solución. También puedes hacerlo en Revisar y editar. Admite JPG, PNG y WebP. Puedes cambiarla o quitarla desde el mismo apartado. La imagen de la respuesta se muestra al revelar la solución o responder al test. Guardar lista incluye las imágenes en el mismo archivo .json para llevarlo al pendrive.</p>
 <h3>3. Jugar con puntos</h3>
 <p>Elige Sí o No en Jugar con puntos, en cualquiera de los cuatro modos. Con puntos puedes jugar en individual, con un marcador, o por equipos, de dos a ocho. Los equipos se identifican por colores, letras, números o animales.</p>
 <p>En Solo preguntas y Preguntas y respuestas, marca el tick de más uno para un acierto o la cruz de menos uno para un fallo. En Tipo test y Verdadero o falso, el resultado se registra automáticamente al elegir una opción.</p>
@@ -150,7 +150,7 @@
               <label class="quiet bank-action file-action"><span aria-hidden="true">📂</span> Abrir lista guardada
                 <input id="open-bank-in-mode" type="file" accept=".json,application/json,.txt,text/plain" aria-describedby="open-bank-help">
               </label>
-              <p class="hint" id="open-bank-help">Elige una lista de la ruleta (.json) o un archivo de texto (.txt) del pendrive o del ordenador.</p>
+              <p class="hint" id="open-bank-help">Elige una lista de la ruleta (.json) o un texto (.txt). Las listas guardadas cambian automáticamente al modo correspondiente, aunque las abras desde otro modo.</p>
             </div>
             <div id="open-import" hidden>
               <label for="source">Pega aquí tu lista</label>
@@ -197,7 +197,9 @@ C) Pulsando Mostrar respuesta</pre>
             </div>
             <div id="quiz-review" hidden>
               <h3 id="quiz-review-title" tabindex="-1">Marca la respuesta correcta de cada pregunta</h3>
+              <p class="hint">Puedes editar el bloque de arriba o las tarjetas de abajo: los cambios se actualizan en ambos sitios. La × del enunciado elimina la pregunta completa. La × de una respuesta elimina solo esa respuesta. El ＋ de la derecha permite añadir, cambiar o quitar una imagen.</p>
               <div id="quiz-draft-list"></div>
+              <button class="quiet full" id="draft-add" type="button">＋ Añadir pregunta</button>
               <button class="primary full" id="save-quiz-draft" type="button">Importar preguntas</button>
             </div>
             <p class="notice" id="import-notice" role="status"></p>
@@ -277,7 +279,7 @@ C) Pulsando Mostrar respuesta</pre>
         <div class="bank-actions">
           <button class="quiet bank-action" id="save-bank" type="button"><span aria-hidden="true">↓</span> Guardar lista</button>
           <label class="quiet bank-action file-action"><span aria-hidden="true">📂</span> Abrir lista guardada
-            <input id="open-bank" type="file" accept=".json,application/json">
+            <input id="open-bank" type="file" accept=".json,application/json,.txt,text/plain">
           </label>
           <button class="quiet bank-action" id="open-remembered-bank" type="button">Abrir lista de este navegador</button>
           <label class="check"><input id="remember-bank" type="checkbox"> Recordar lista en este dispositivo</label>
@@ -325,7 +327,7 @@ C) Pulsando Mostrar respuesta</pre>
                 <span id="listen-icon" aria-hidden="true">🔊</span>
               </button>
             </div>
-            <img id="question-image" class="entry-image" alt="Imagen de la pregunta" hidden>
+            <div id="question-image" class="entry-gallery" role="group" aria-label="Imágenes de la pregunta" hidden></div>
             <div id="closed-choices" class="closed-choices" role="group" aria-label="Opciones de respuesta" hidden></div>
           <p id="closed-feedback" class="closed-feedback" role="status"></p>
           <div class="result-controls">
@@ -338,7 +340,7 @@ C) Pulsando Mostrar respuesta</pre>
               </div>
               <button class="quiet" id="reveal" type="button" aria-controls="answer" hidden>Mostrar respuesta</button>
               <p id="answer" tabindex="-1" hidden></p>
-              <img id="answer-image" class="entry-image" alt="Imagen de la respuesta" hidden>
+              <div id="answer-image" class="entry-gallery" role="group" aria-label="Imágenes de la respuesta" hidden></div>
               <button class="quiet" id="listen-answer" type="button" hidden>🔊 Escuchar respuesta</button>
             </div>
           </div>

@@ -322,69 +322,76 @@
     } finally { URL.revokeObjectURL(url); }
   }
 
+  function entryImages(entry, kind) {
+    if (!entry) return [];
+    if (Array.isArray(entry[kind + 'Images'])) return entry[kind + 'Images'].filter(item => safeImage(item?.src));
+    return safeImage(entry[kind + 'Image']) ? [{src: entry[kind + 'Image'], alt: entry[kind + 'ImageAlt'] || ''}] : [];
+  }
+
   function showEntryImage(kind, visible) {
-    const image = $(kind + '-image');
-    const src = currentEntry?.[kind + 'Image'];
-    image.hidden = !visible || !safeImage(src);
-    if (image.hidden) image.removeAttribute('src');
-    else {
-      image.src = src;
-      image.alt = currentEntry[kind + 'ImageAlt'] || (kind === 'question' ? 'Imagen de la pregunta' : 'Imagen de la respuesta');
-    }
+    const gallery = $(kind + '-image');
+    const images = visible ? entryImages(currentEntry, kind) : [];
+    gallery.replaceChildren(); gallery.hidden = !images.length;
+    gallery.dataset.count = String(images.length);
+    images.forEach((item, i) => {
+      const image = document.createElement('img'); image.className = 'entry-image'; image.src = item.src;
+      image.alt = item.alt || `Imagen ${i + 1} de la ${kind === 'question' ? 'pregunta' : 'respuesta'}`;
+      gallery.append(image);
+    });
   }
 
   function imageEditor(entry, kind, index) {
-    const saveChange = () => { if (questions.includes(entry)) { usingExampleList = false; rememberBank(); } };
-    const wrap = document.createElement('div');
-    wrap.className = 'image-editor';
-    const menu = document.createElement('details');
-    const plus = document.createElement('summary');
+    const wrap = document.createElement('div'); wrap.className = 'image-editor';
     const subject = kind === 'question' ? 'pregunta' : 'respuesta';
-    plus.textContent = '＋';
-    plus.setAttribute('aria-label', `Imagen de la ${subject} ${index + 1}`);
-    plus.title = `Añadir imagen a la ${subject}`;
-    const attach = document.createElement('button');
-    attach.type = 'button';
-    attach.className = 'quiet';
-    const chooser = document.createElement('input');
-    chooser.type = 'file'; chooser.accept = 'image/jpeg,image/png,image/webp'; chooser.hidden = true;
-    const thumb = document.createElement('img');
-    thumb.className = 'image-thumbnail';
-    const altLabel = document.createElement('label');
-    altLabel.textContent = 'Descripción de la imagen';
-    const alt = document.createElement('input');
-    alt.type = 'text'; alt.maxLength = 300;
-    alt.placeholder = 'Describe lo que aparece';
-    altLabel.append(alt);
-    const remove = document.createElement('button');
-    remove.type = 'button'; remove.className = 'quiet'; remove.textContent = 'Quitar imagen';
+    const menu = document.createElement('details');
+    const plus = document.createElement('summary'); plus.textContent = '＋';
+    plus.setAttribute('aria-label', `Imagen de la ${subject} ${index + 1}`); plus.title = `Añadir imagen a la ${subject}`;
+    const attach = document.createElement('button'); attach.type = 'button'; attach.className = 'quiet'; attach.textContent = 'Adjuntar imagen';
+    const chooser = document.createElement('input'); chooser.type = 'file'; chooser.accept = 'image/jpeg,image/png,image/webp'; chooser.multiple = true; chooser.hidden = true;
+    const previews = document.createElement('div'); previews.className = 'image-previews';
     const notice = document.createElement('p'); notice.setAttribute('role', 'status');
-    const refresh = () => {
-      const exists = safeImage(entry[kind + 'Image']);
-      thumb.hidden = altLabel.hidden = remove.hidden = !exists;
-      if (exists) { thumb.src = entry[kind + 'Image']; thumb.alt = entry[kind + 'ImageAlt'] || `Imagen de la ${subject}`; }
-      else thumb.removeAttribute('src');
-      alt.value = entry[kind + 'ImageAlt'] || '';
-      attach.textContent = exists ? 'Cambiar imagen' : 'Adjuntar imagen';
+    const store = images => {
+      entry[kind + 'Images'] = images;
+      delete entry[kind + 'Image']; delete entry[kind + 'ImageAlt'];
+      if (questions.includes(entry)) { usingExampleList = false; rememberBank(); }
       if (currentEntry === entry) showEntryImage(kind, kind === 'question' || !$('answer').hidden || Boolean($('closed-choices').dataset.answered));
     };
-    alt.addEventListener('input', () => { entry[kind + 'ImageAlt'] = alt.value; thumb.alt = alt.value || `Imagen de la ${subject}`; saveChange(); if (currentEntry === entry) refresh(); });
+    const refresh = () => {
+      previews.replaceChildren();
+      entryImages(entry, kind).forEach((item, i) => {
+        const tile = document.createElement('div'); tile.className = 'image-preview-tile';
+        const thumb = document.createElement('img'); thumb.className = 'image-thumbnail'; thumb.src = item.src; thumb.alt = item.alt || `Imagen ${i + 1} de la ${subject}`;
+        const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'quiet image-remove'; remove.textContent = '×';
+        remove.setAttribute('aria-label', `Quitar imagen ${i + 1} de la ${subject} ${index + 1}`);
+        remove.title = 'Quitar imagen';
+        remove.addEventListener('click', () => { const images = entryImages(entry, kind); images.splice(i, 1); store(images); refresh(); notice.textContent = 'Imagen eliminada.'; plus.focus(); });
+        const change = document.createElement('button'); change.type = 'button'; change.className = 'quiet'; change.textContent = 'Cambiar';
+        change.setAttribute('aria-label', `Cambiar imagen ${i + 1} de la ${subject} ${index + 1}`);
+        const replacement = document.createElement('input'); replacement.type = 'file'; replacement.accept = chooser.accept; replacement.hidden = true;
+        change.addEventListener('click', () => replacement.click());
+        replacement.addEventListener('change', async () => {
+          const file = replacement.files[0]; replacement.value = ''; if (!file) return;
+          change.disabled = true;
+          try { const src = await prepareImage(file); const images = entryImages(entry, kind); if (images[i] !== item) return; images[i] = {src, alt: ''}; store(images); refresh(); notice.textContent = 'Imagen cambiada.'; }
+          catch(error) { notice.textContent = error.message; } finally { change.disabled = false; }
+        });
+        tile.append(thumb, remove, change, replacement); previews.append(tile);
+      });
+    };
     attach.addEventListener('click', () => chooser.click());
     chooser.addEventListener('change', async () => {
-      const file = chooser.files[0]; chooser.value = ''; if (!file) return;
-      attach.disabled = true; notice.textContent = 'Preparando imagen…';
+      const files = [...chooser.files]; chooser.value = ''; if (!files.length) return;
+      attach.disabled = true; notice.textContent = 'Preparando imágenes…';
       try {
-        const src = await prepareImage(file);
+        const images = [];
+        for (const file of files) images.push({src: await prepareImage(file), alt: ''});
         if (!questions.includes(entry) && !quizDraft.includes(entry)) return;
-        entry[kind + 'Image'] = src;
-        saveChange(); refresh(); menu.open = false;
-        notice.textContent = 'Imagen añadida. Se incluirá al guardar la lista.';
-      } catch (error) { notice.textContent = error.message || 'No se ha podido abrir la imagen.'; }
+        store([...entryImages(entry, kind), ...images]); refresh(); menu.open = false;
+        notice.textContent = `${images.length === 1 ? 'Imagen añadida' : 'Imágenes añadidas'}. Se incluirán al guardar la lista.`;
+      } catch(error) { notice.textContent = error.message || 'No se ha podido abrir la imagen.'; }
       finally { attach.disabled = false; }
     });
-    remove.addEventListener('click', () => { delete entry[kind + 'Image']; delete entry[kind + 'ImageAlt']; saveChange(); refresh(); notice.textContent = 'Imagen eliminada.'; plus.focus(); });
-    menu.append(plus, attach, remove, chooser);
-    wrap.append(menu, thumb, altLabel, notice); refresh(); return wrap;
+    menu.append(plus, attach, chooser); wrap.append(menu, previews, notice); refresh(); return wrap;
   }
 
   function renderEditor() {
@@ -593,7 +600,7 @@
     $('grading').hidden = !isGame() || closedMode() || !pendingTurn;
     $('finish-game').hidden = !isGame() || gameFinished;
     $('finish-game').disabled = pendingTurn || animation !== null || !players.some((player) => player.turns > 0);
-    $('reveal').hidden = closedMode() || !hasAnswers() || (!currentAnswer && !safeImage(currentEntry?.answerImage)) || !$('answer').hidden;
+    $('reveal').hidden = closedMode() || !hasAnswers() || (!currentAnswer && !entryImages(currentEntry, 'answer').length) || !$('answer').hidden;
     $('spin').setAttribute('aria-disabled', String(!pool.length || exhausted || animation !== null || pendingTurn || gameFinished));
     $('spin-label').textContent = animation !== null ? 'Girando…' : gameFinished ? 'Partida terminada' : exhausted ? 'Ronda completa' : 'Girar ruleta';
     $('reset').disabled = pool.length === 0 && !isGame();
@@ -851,7 +858,7 @@
     showEntryImage('answer', visible);
     $('listen-answer').hidden = !visible || !currentAnswer;
     $('answer').textContent = visible ? currentAnswer : '';
-    $('reveal').hidden = closedMode() || !hasAnswers() || (!currentAnswer && !safeImage(currentEntry?.answerImage)) || !$('answer').hidden;
+    $('reveal').hidden = closedMode() || !hasAnswers() || (!currentAnswer && !entryImages(currentEntry, 'answer').length) || !$('answer').hidden;
   }
 
   function defaultTeamLabel(index) {
@@ -1444,7 +1451,7 @@
   function rememberBank() {
     if (!$('remember-bank').checked) return;
     try {
-      localStorage.setItem(bankKey, JSON.stringify({ questions, usingExampleList }));
+      localStorage.setItem(bankKey, JSON.stringify({ questions, usingExampleList, mode: $('mode').value, title: $('topic').value }));
     } catch {
       $('remember-bank').checked = false;
       $('bank-notice').textContent = 'El navegador no ha podido guardar la lista. Puedes descargarla.';
@@ -1462,14 +1469,30 @@
     for (const entry of bank.questions) {
       for (const kind of ['question', 'answer']) {
         if (entry[kind + 'Image'] !== undefined && !safeImage(entry[kind + 'Image'])) throw new Error('Imagen no válida');
+        if (entry[kind + 'Images'] !== undefined && (!Array.isArray(entry[kind + 'Images']) || !entry[kind + 'Images'].every(item => safeImage(item?.src) && (item.alt === undefined || typeof item.alt === 'string')))) throw new Error('Galería no válida');
         if (entry[kind + 'ImageAlt'] !== undefined && typeof entry[kind + 'ImageAlt'] !== 'string') throw new Error('Descripción no válida');
       }
     }
     return bank.questions;
   }
 
+  function restoreBank(text, opened) {
+    const saved = JSON.parse(text);
+    let mode = ['questions', 'answers', 'quiz', 'binary'].includes(saved.mode) ? saved.mode : null;
+    if (!mode) mode = opened.some(entry => Array.isArray(entry.options) && entry.options.length >= 2) ? 'quiz'
+      : opened.some(entry => Number.isInteger(entry.binaryCorrect)) ? 'binary'
+      : opened.some(entry => entry.answer.trim() || entryImages(entry, 'answer').length) ? 'answers' : 'questions';
+    questions = opened; usingExampleList = false;
+    $('mode').value = mode;
+    if (typeof saved.title === 'string') $('topic').value = saved.title;
+    $('topic').dispatchEvent(new Event('input'));
+    quizDraft = [];
+    updateMode();
+    return $('mode').selectedOptions[0].textContent;
+  }
+
   function downloadBank() {
-    const url = URL.createObjectURL(new Blob([JSON.stringify({ questions }, null, 2)], { type: 'application/json' }));
+    const url = URL.createObjectURL(new Blob([JSON.stringify({ version: 2, mode: $('mode').value, title: $('topic').value, questions }, null, 2)], { type: 'application/json' }));
     const link = document.createElement('a');
     link.href = url;
     link.download = 'lista-ruleta.json';
@@ -1563,104 +1586,145 @@
   const quizSource = $('quiz-source');
 
   $('open-question-editor').addEventListener('click', () => {
-    clearImportNotice();
     editingExisting = false;
+    quizDraft = [];
+    $('question-editor').classList.remove('reviewing');
     $('question-editor-title').textContent = 'Añadir preguntas';
     $('quiz-review').hidden = true;
     $('open-import').hidden = closedMode();
     $('quiz-import').hidden = !isQuiz();
     $('closed-import').hidden = $('mode').value !== 'binary';
+    clearImportNotice();
+    draftSource().value = '';
     $('question-editor').showModal();
-    $(isQuiz() ? 'quiz-source' : closedMode() ? 'closed-questions' : 'source').focus({ preventScroll: true });
+    draftSource().focus({preventScroll: true});
     $('question-editor').scrollTop = 0;
   });
 
-  for (const source of [quizSource, $('closed-questions')]) {
-    source.addEventListener('input', () => {
-      $('quiz-review').hidden = true;
-      clearImportNotice();
+  function draftSource() { return $(isQuiz() ? 'quiz-source' : closedMode() ? 'closed-questions' : 'source'); }
+
+  function syncDraftSource() {
+    draftSource().value = quizDraft.map((entry, index) => {
+      const prompt = `${index + 1}. ${entry.question.replace(/\n/g, ' ')}`;
+      if (isQuiz()) return prompt + '\n' + entry.options.map((option, i) => `${optionLetter(i)}) ${option.replace(/\n/g, ' ')}`).join('\n');
+      if (hasAnswers() && !closedMode() && entry.answer) return prompt + ' / ' + entry.answer.replace(/\n/g, ' ');
+      return prompt;
+    }).join('\n\n');
+    $('save-quiz-draft').disabled = false;
+    clearImportNotice();
+  }
+
+  function mergeDraftImages(parsed) {
+    return parsed.map((entry, index) => {
+      const old = quizDraft.find(item => item.question === entry.question)
+        || (parsed.length === quizDraft.length ? quizDraft[index] : null);
+      if (!old) return entry;
+      for (const kind of ['question', 'answer']) for (const suffix of ['Image', 'ImageAlt', 'Images'])
+        if (old[kind + suffix] !== undefined) entry[kind + suffix] = old[kind + suffix];
+      if (isQuiz() && Array.isArray(old.options)) {
+        const solution = old.options[old.correct];
+        const correct = solution === undefined ? -1 : entry.options.indexOf(solution);
+        entry.correct = correct < 0 ? null : correct;
+      } else if ($('mode').value === 'binary') entry.binaryCorrect = old.binaryCorrect ?? entry.binaryCorrect;
+      return entry;
     });
   }
 
+  for (const source of [quizSource, $('closed-questions'), $('source')]) {
+    source.addEventListener('input', () => {
+      clearImportNotice();
+      if ($('quiz-review').hidden) return;
+      const entries = isQuiz() ? parseQuizText(source.value) : closedMode() ? parseBinaryText(source.value) : parseEntries(source.value);
+      if (entries.some(entry => !entry)) {
+        $('save-quiz-draft').disabled = true;
+        $('import-notice').textContent = 'Completa el bloque de texto: numera las preguntas y escribe al menos dos opciones A), B)… en cada test. Las tarjetas se actualizarán al completar el formato.';
+        return;
+      }
+      quizDraft = mergeDraftImages(entries);
+      $('save-quiz-draft').disabled = false;
+      renderQuizDraft();
+    });
+  }
+
+  function smallRemove(label, action) {
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'quiet draft-remove'; button.textContent = '×';
+    button.setAttribute('aria-label', label); button.title = label;
+    button.addEventListener('click', action); return button;
+  }
+
+  function draftChanged() { syncDraftSource(); }
+
   function renderQuizDraft() {
-    const list = $('quiz-draft-list');
-    list.replaceChildren();
+    const list = $('quiz-draft-list'); list.replaceChildren();
     const binary = $('mode').value === 'binary';
     const solutionKey = binary ? 'binaryCorrect' : 'correct';
     quizDraft.forEach((entry, index) => {
-      const group = document.createElement('fieldset');
-      group.className = 'quiz-review-card';
-      const number = document.createElement('legend');
-      number.textContent = `${binary ? 'Afirmación' : 'Pregunta'} ${index + 1}`;
-      const question = document.createElement('textarea');
-      question.rows = 2;
-      question.value = entry.question;
+      const group = document.createElement('div'); group.className = 'quiz-review-card'; group.setAttribute('role', 'group'); group.setAttribute('aria-labelledby', `draft-heading-${index}`);
+      const number = document.createElement('h4'); number.id = `draft-heading-${index}`; number.textContent = `${binary ? 'Afirmación' : 'Pregunta'} ${index + 1}`;
+      const question = document.createElement('textarea'); question.rows = 2; question.value = entry.question;
       question.setAttribute('aria-label', `Enunciado de la pregunta ${index + 1}`);
-      question.addEventListener('input', () => { entry.question = question.value; clearImportNotice(); });
-      const heading = document.createElement('p');
-      heading.className = 'quiz-correct-heading hint';
-      heading.textContent = 'Correcta';
-      const promptRow = document.createElement('div');
-      promptRow.className = 'image-field';
-      promptRow.append(question, imageEditor(entry, 'question', index));
+      question.addEventListener('input', () => { entry.question = question.value; draftChanged(); });
+      const promptRow = document.createElement('div'); promptRow.className = 'image-field with-remove';
+      promptRow.append(smallRemove(`Eliminar pregunta ${index + 1}`, () => { quizDraft.splice(index, 1); syncDraftSource(); renderQuizDraft(); }), question, imageEditor(entry, 'question', index));
       group.append(number, promptRow);
-      if (closedMode()) group.append(heading);
       if (!closedMode() && hasAnswers()) {
-        const answer = document.createElement('textarea');
-        answer.rows = 2; answer.value = entry.answer || '';
-        answer.placeholder = 'Respuesta';
-        answer.setAttribute('aria-label', `Respuesta de la pregunta ${index + 1}`);
-        answer.addEventListener('input', () => { entry.answer = answer.value; });
-        group.append(answer);
-      }
-      if (closedMode()) entryOptions(entry).forEach((value, optionIndex) => {
-        const row = document.createElement('div');
-        row.className = 'quiz-review-option';
-        const letter = optionLetter(optionIndex);
-        if (binary) {
-          row.classList.add('binary-review-option');
-          const label = document.createElement('label');
-          label.textContent = value;
-          label.htmlFor = `quiz-radio-${index}-${optionIndex}`;
-          row.append(label);
+        if (entry.answerRemoved) {
+          const add = document.createElement('button'); add.type = 'button'; add.className = 'quiet'; add.textContent = '＋ Añadir respuesta';
+          add.addEventListener('click', () => { delete entry.answerRemoved; renderQuizDraft(); }); group.append(add);
         } else {
-          const label = document.createElement('label');
-          label.textContent = `${letter})`;
-          const option = document.createElement('input');
-          option.type = 'text';
-          option.value = value;
-          option.id = `quiz-option-${index}-${letter}`;
-          option.setAttribute('aria-label', `Opción ${letter} de la pregunta ${index + 1}`);
-          label.htmlFor = option.id;
-          option.addEventListener('input', () => { entry.options[optionIndex] = option.value; clearImportNotice(); });
-          row.append(label, option);
+          const answer = document.createElement('textarea'); answer.rows = 2; answer.value = entry.answer || ''; answer.placeholder = 'Respuesta';
+          answer.setAttribute('aria-label', `Respuesta de la pregunta ${index + 1}`);
+          answer.addEventListener('input', () => { entry.answer = answer.value; draftChanged(); });
+          const answerRow = document.createElement('div'); answerRow.className = 'image-field with-remove';
+          answerRow.append(smallRemove(`Eliminar respuesta de la pregunta ${index + 1}`, () => {
+            entry.answer = ''; entry.answerRemoved = true; delete entry.answerImage; delete entry.answerImageAlt; delete entry.answerImages; syncDraftSource(); renderQuizDraft();
+          }), answer, imageEditor(entry, 'answer', index)); group.append(answerRow);
         }
-        const correct = document.createElement('input');
-        correct.type = 'radio';
-        correct.name = `quiz-correct-${index}`;
-        correct.id = `quiz-radio-${index}-${optionIndex}`;
-        correct.checked = entry[solutionKey] === optionIndex;
-        correct.setAttribute('aria-label', binary
-          ? `Marcar ${value} como correcta en la afirmación ${index + 1}`
-          : `Marcar la opción ${letter} como correcta en la pregunta ${index + 1}`);
-        correct.addEventListener('change', () => { entry[solutionKey] = optionIndex; clearImportNotice(); });
-        row.append(correct);
-        group.append(row);
-      });
-      const solutionImage = document.createElement('div');
-      solutionImage.className = 'draft-solution-image';
-      const label = document.createElement('span');
-      label.textContent = 'Imagen de la solución (opcional)';
-      solutionImage.append(label, imageEditor(entry, 'answer', index));
-      if (hasAnswers() || closedMode()) group.append(solutionImage);
-      const remove = document.createElement('button');
-      remove.type = 'button'; remove.className = 'quiet'; remove.textContent = 'Eliminar pregunta';
-      remove.setAttribute('aria-label', `Eliminar pregunta ${index + 1}`);
-      remove.addEventListener('click', () => { quizDraft.splice(index, 1); renderQuizDraft(); });
-      group.append(remove);
+      }
+      if (closedMode()) {
+        const heading = document.createElement('p'); heading.className = 'quiz-correct-heading hint'; heading.textContent = 'Correcta'; group.append(heading);
+        entryOptions(entry).forEach((value, optionIndex) => {
+          const row = document.createElement('div'); row.className = 'quiz-review-option';
+          const letter = optionLetter(optionIndex);
+          if (binary) {
+            row.classList.add('binary-review-option'); const label = document.createElement('label'); label.textContent = value; label.htmlFor = `quiz-radio-${index}-${optionIndex}`; row.append(label);
+          } else {
+            row.classList.add('removable-option');
+            row.append(smallRemove(`Eliminar opción ${letter} de la pregunta ${index + 1}`, () => {
+              entry.options.splice(optionIndex, 1);
+              if (entry.correct === optionIndex) entry.correct = null;
+              else if (entry.correct > optionIndex) entry.correct--;
+              syncDraftSource(); renderQuizDraft();
+            }));
+            const label = document.createElement('label'); label.textContent = `${letter})`;
+            const option = document.createElement('input'); option.type = 'text'; option.value = value; option.id = `quiz-option-${index}-${letter}`;
+            option.setAttribute('aria-label', `Opción ${letter} de la pregunta ${index + 1}`); label.htmlFor = option.id;
+            option.addEventListener('input', () => { entry.options[optionIndex] = option.value; draftChanged(); }); row.append(label, option);
+          }
+          const correct = document.createElement('input'); correct.type = 'radio'; correct.name = `quiz-correct-${index}`; correct.id = `quiz-radio-${index}-${optionIndex}`;
+          correct.checked = entry[solutionKey] === optionIndex;
+          correct.setAttribute('aria-label', binary ? `Marcar ${value} como correcta en la afirmación ${index + 1}` : `Marcar la opción ${letter} como correcta en la pregunta ${index + 1}`);
+          correct.addEventListener('change', () => { entry[solutionKey] = optionIndex; clearImportNotice(); }); row.append(correct); group.append(row);
+        });
+        if (!binary) {
+          const addOption = document.createElement('button'); addOption.type = 'button'; addOption.className = 'quiet'; addOption.textContent = '＋ Añadir respuesta';
+          addOption.setAttribute('aria-label', `Añadir respuesta a la pregunta ${index + 1}`);
+          addOption.addEventListener('click', () => { entry.options.push(''); syncDraftSource(); renderQuizDraft(); }); group.append(addOption);
+        }
+        const solutionImage = document.createElement('div'); solutionImage.className = 'draft-solution-image';
+        const label = document.createElement('span'); label.textContent = 'Imagen de la solución (opcional)';
+        solutionImage.append(label, imageEditor(entry, 'answer', index)); group.append(solutionImage);
+      }
       list.append(group);
     });
   }
+
+  $('draft-add').addEventListener('click', () => {
+    quizDraft.push({ question: '', answer: '', ...(isQuiz() ? {options: ['', ''], correct: null} : {}) });
+    syncDraftSource(); renderQuizDraft();
+    $('quiz-draft-list').lastElementChild.querySelector('textarea').focus();
+  });
 
   $('prepare-quiz').addEventListener('click', () => {
     quizDraft = parseQuizText(quizSource.value);
@@ -1676,7 +1740,11 @@
 
   function showClosedReview() {
     clearImportNotice();
-    for (const id of ['open-import', 'quiz-import', 'closed-import']) $(id).hidden = true;
+    $('question-editor').classList.add('reviewing');
+    $('open-import').hidden = closedMode();
+    $('quiz-import').hidden = !isQuiz();
+    $('closed-import').hidden = $('mode').value !== 'binary';
+    syncDraftSource();
     $('save-quiz-draft').textContent = editingExisting ? 'Guardar cambios' : 'Importar preguntas';
     $('quiz-review-title').textContent = !closedMode() ? 'Revisa las preguntas y añade imágenes si quieres' : isQuiz() ? 'Marca la respuesta correcta de cada pregunta' : 'Marca Verdadero o Falso en cada afirmación';
     renderQuizDraft();
@@ -1690,14 +1758,15 @@
     const solutionKey = binary ? 'binaryCorrect' : 'correct';
     const invalid = quizDraft.findIndex((entry) =>
       !entry.question.trim() || (closedMode() && (entryOptions(entry).some((option) => !option.trim())
-      || !Number.isInteger(entry[solutionKey]))));
+      || !Number.isInteger(entry[solutionKey]) || !entryOptions(entry)[entry[solutionKey]]?.trim() || (isQuiz() && entry.options.length < 2))));
     if (invalid !== -1) {
-      $('import-notice').textContent = binary
+      $('import-notice').textContent = !closedMode() ? `Revisa la pregunta ${invalid + 1}. Completa el enunciado.` : binary
         ? `Revisa la afirmación ${invalid + 1}. Completa la frase y marca Verdadero o Falso.`
         : `Revisa la pregunta ${invalid + 1}. Completa el enunciado y las opciones, y marca la correcta.`;
-      $('quiz-draft-list').children[invalid].querySelector(closedMode() ? 'input[type="radio"]' : 'textarea').focus();
+      $('quiz-draft-list').children[invalid].querySelector('textarea').focus();
       return;
     }
+    for (const entry of quizDraft) delete entry.answerRemoved;
     questions = editingExisting || !isQuiz() ? quizDraft : [...(usingExampleList ? [] : questions), ...quizDraft];
     usingExampleList = false;
     $('notice').textContent = `${binary ? 'Afirmaciones importadas' : 'Preguntas añadidas'}: ${quizDraft.length}.`;
@@ -1855,27 +1924,24 @@
     try {
       const content = await file.text();
       if (fromMode && (!$('question-editor').open || $('mode').value !== mode)) return;
-      if (fromMode && /\.txt$/i.test(file.name)) {
+      if (/\.txt$/i.test(file.name)) {
+        if (!fromMode) $('open-question-editor').click();
+        $('question-editor').classList.remove('reviewing');
+        $('open-import').hidden = closedMode();
+        $('quiz-import').hidden = !isQuiz();
+        $('closed-import').hidden = $('mode').value !== 'binary';
         const source = $(isQuiz() ? 'quiz-source' : closedMode() ? 'closed-questions' : 'source');
         source.value = content;
         $('quiz-review').hidden = true;
         notice.textContent = isQuiz() || closedMode()
           ? 'Texto cargado. Pulsa Continuar para revisar las soluciones.'
-          : 'Texto cargado. Pulsa Importar preguntas.';
+          : 'Texto cargado. Pulsa Continuar para revisar e importar.';
         source.focus();
         return;
       }
       const opened = decodeBank(content);
-      if (fromMode && opened.length && (isQuiz() ? !opened.some((entry) => entry.options?.length >= 2)
-        : mode === 'binary' && !opened.some((entry) => Number.isInteger(entry.binaryCorrect)))) {
-        notice.textContent = 'Esta lista no contiene soluciones para el modo seleccionado. Abre una lista de este modo o carga un archivo de texto.';
-        return;
-      }
-      questions = opened;
-      usingExampleList = false;
-      renderEditor();
-      rebuildPool();
-      const message = `Lista abierta · ${pool.length} ${pool.length === 1 ? 'pregunta' : 'preguntas'}.`;
+      const detectedMode = restoreBank(content, opened);
+      const message = `Lista abierta · ${pool.length} ${pool.length === 1 ? 'pregunta' : 'preguntas'} · ${detectedMode}.`;
       if (fromMode) {
         $('quiz-review').hidden = true;
         $('question-editor').close();
@@ -1897,12 +1963,9 @@
         return;
       }
       const opened = decodeBank(saved);
-      questions = opened;
-      usingExampleList = false;
+      const detectedMode = restoreBank(saved, opened);
       $('remember-bank').checked = true;
-      renderEditor();
-      rebuildPool();
-      $('bank-notice').textContent = 'Lista del navegador abierta. Selecciona el modo correspondiente a tu lista.';
+      $('bank-notice').textContent = `Lista del navegador abierta · ${detectedMode}.`;
     } catch {
       $('bank-notice').textContent = 'No se ha podido abrir la lista guardada en este navegador.';
     }
