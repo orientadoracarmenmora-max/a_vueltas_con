@@ -29,3 +29,8 @@ Publica index.html, estilos.css, ruleta.js, las cuatro capturas y el PDF en la r
 La guía ampliada incluye 16 apartados, pasos numerados, capturas reales, índice con enlaces y autoría. El PDF contiene 16 páginas con navegación al índice.
 
 Tipografía incluida: Josefin Sans, de Santiago Orozco (Google Fonts), bajo licencia SIL OFL 1.1. Consulta JosefinSans-OFL.txt. La fuente se sirve desde los propios archivos y no necesita servicios externos.
+
+Opciones adicionales incluidas: Quicksand y Raleway (Google Fonts), con sus licencias OFL junto a los archivos.
+
+
+Fiona es una variante de la fuente abierta Handlee (Joe Prince / Admix Designs): proporciones ajustadas y puntos originales en forma de corazón en i y j. Su nombre y archivos son distintos de Peach. Incluye licencia OFL y conserva la atribución original. Josefin Sans sigue siendo la predeterminada.

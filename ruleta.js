@@ -701,7 +701,7 @@
     const size = fewQuestions ? 40 : Math.min(49, space * .62);
     const maxLines = fewQuestions ? 4 : Math.max(1, Math.min(3, Math.floor(space / (size * 1.16))));
     const family = getComputedStyle(root).getPropertyValue('--display').trim() || "'Josefin Sans', Arial, sans-serif";
-    measure.font = `bold ${size}px ${family}`;
+    measure.font = `${root.dataset.font === 'fiona' ? 400 : 700} ${size}px ${family}`;
     const maxWidth = radius * (fewQuestions ? .58 : .52);
     wheelText = { family, size, lines: pool.map(({ question }) => wrapWheelText(question, maxWidth, maxLines)) };
   }
@@ -2085,6 +2085,7 @@
   // Re-measure wheel labels after the bundled webfont has loaded.
   function refreshLoadedDesign() { prepareWheelText(); updatePalette(); }
   document.fonts?.ready.then(refreshLoadedDesign);
+  document.fonts?.addEventListener('loadingdone', refreshLoadedDesign);
   document.querySelector('link[rel="stylesheet"]')?.addEventListener('load', refreshLoadedDesign);
   window.addEventListener('load', refreshLoadedDesign, { once: true });
 })();
