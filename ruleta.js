@@ -342,10 +342,10 @@
 
   function imageEditor(entry, kind, index) {
     const wrap = document.createElement('div'); wrap.className = 'image-editor';
-    const subject = kind === 'question' ? 'pregunta' : 'respuesta';
+    const subject = kind === 'question' ? 'pregunta' : kind.startsWith('option') ? `opción ${optionLetter(Number(kind.slice(6)))}` : 'respuesta';
     const menu = document.createElement('details');
     const plus = document.createElement('summary'); plus.textContent = '＋';
-    plus.setAttribute('aria-label', `Imagen de la ${subject} ${index + 1}`); plus.title = `Añadir imagen a la ${subject}`;
+    plus.setAttribute('aria-label', kind.startsWith('option') ? `Imagen de la ${subject} de la pregunta ${index + 1}` : `Imagen de la ${subject} ${index + 1}`); plus.title = `Añadir imagen a la ${subject}`;
     const attach = document.createElement('button'); attach.type = 'button'; attach.className = 'quiet'; attach.textContent = 'Adjuntar imagen';
     const chooser = document.createElement('input'); chooser.type = 'file'; chooser.accept = 'image/jpeg,image/png,image/webp'; chooser.multiple = true; chooser.hidden = true;
     const previews = document.createElement('div'); previews.className = 'image-previews';
@@ -354,7 +354,7 @@
       entry[kind + 'Images'] = images;
       delete entry[kind + 'Image']; delete entry[kind + 'ImageAlt'];
       if (questions.includes(entry)) { usingExampleList = false; rememberBank(); }
-      if (currentEntry === entry) showEntryImage(kind, kind === 'question' || !$('answer').hidden || Boolean($('closed-choices').dataset.answered));
+      if (currentEntry === entry && !kind.startsWith('option')) showEntryImage(kind, kind === 'question' || !$('answer').hidden || Boolean($('closed-choices').dataset.answered));
     };
     const refresh = () => {
       previews.replaceChildren();
@@ -372,7 +372,7 @@
         replacement.addEventListener('change', async () => {
           const file = replacement.files[0]; replacement.value = ''; if (!file) return;
           change.disabled = true;
-          try { const src = await prepareImage(file); const images = entryImages(entry, kind); if (images[i] !== item) return; images[i] = {src, alt: ''}; store(images); refresh(); notice.textContent = 'Imagen cambiada.'; }
+          try { const src = await prepareImage(file); const images = entryImages(entry, kind); if (images[i]?.src !== item.src) return; images[i] = {src, alt: ''}; store(images); refresh(); notice.textContent = 'Imagen cambiada.'; }
           catch(error) { notice.textContent = error.message; } finally { change.disabled = false; }
         });
         tile.append(thumb, remove, change, replacement); previews.append(tile);
@@ -499,7 +499,6 @@
       return Number.isInteger(correct) && Boolean(options[correct]?.trim())
         && (binary || Boolean(options[0]?.trim() && options[1]?.trim()));
     });
-    $('load-examples').hidden = usingExampleList;
     $('total').textContent = closedMode() ? `${pool.length}/${questions.length} listas` : pool.length;
     rememberBank();
     prepareWheelText();
@@ -529,6 +528,17 @@
         button.type = 'button';
         button.className = 'quiet';
         button.textContent = binary ? text : `${optionLetter(index)}. ${text}`;
+        const images = binary ? [] : entryImages(currentEntry, `option${index}`);
+        if (images.length) {
+          button.classList.add('has-option-images');
+          const gallery = document.createElement('span'); gallery.className = 'option-gallery';
+          images.forEach((item, photoIndex) => {
+            const image = document.createElement('img'); image.src = item.src;
+            image.alt = item.alt || `Imagen ${photoIndex + 1} de la opción ${optionLetter(index)}`;
+            gallery.append(image);
+          });
+          button.append(gallery);
+        }
         button.dataset.optionIndex = String(index);
         button.addEventListener('click', () => {
           finishClosedAnswer(index, correct, button);
@@ -536,6 +546,7 @@
         choices.append(button);
       });
     }
+    stage.classList.toggle('visual-test', isQuiz() && Boolean(currentEntry?.options?.some((_, index) => entryImages(currentEntry, `option${index}`).length)));
     delete choices.dataset.answered;
   }
 
@@ -915,7 +926,9 @@
         name.append(icon);
       }
       const label = playerLabel(index);
-      name.append(label);
+      const fullLabel = document.createElement('span'); fullLabel.className = 'team-label-full'; fullLabel.textContent = label;
+      const shortLabel = document.createElement('span'); shortLabel.className = 'team-label-short'; shortLabel.textContent = label.replace(/^Equipo\s+/i, '');
+      name.append(fullLabel, shortLabel);
       if (teams) card.title = label;
       const points = document.createElement('span');
       points.textContent = `${player.points} ${player.points === 1 || player.points === -1 ? 'punto' : 'puntos'}`;
@@ -1467,7 +1480,7 @@
       throw new Error('Lista no válida');
     }
     for (const entry of bank.questions) {
-      for (const kind of ['question', 'answer']) {
+      for (const kind of ['question', 'answer', ...(entry.options || []).map((_, index) => `option${index}`)]) {
         if (entry[kind + 'Image'] !== undefined && !safeImage(entry[kind + 'Image'])) throw new Error('Imagen no válida');
         if (entry[kind + 'Images'] !== undefined && (!Array.isArray(entry[kind + 'Images']) || !entry[kind + 'Images'].every(item => safeImage(item?.src) && (item.alt === undefined || typeof item.alt === 'string')))) throw new Error('Galería no válida');
         if (entry[kind + 'ImageAlt'] !== undefined && typeof entry[kind + 'ImageAlt'] !== 'string') throw new Error('Descripción no válida');
@@ -1622,6 +1635,13 @@
       for (const kind of ['question', 'answer']) for (const suffix of ['Image', 'ImageAlt', 'Images'])
         if (old[kind + suffix] !== undefined) entry[kind + suffix] = old[kind + suffix];
       if (isQuiz() && Array.isArray(old.options)) {
+        entry.options.forEach((option, i) => {
+          const matching = old.options.indexOf(option);
+          const previous = matching >= 0 ? matching : entry.options.length === old.options.length ? i : -1;
+          if (previous < 0) return;
+          for (const suffix of ['Image', 'ImageAlt', 'Images'])
+            if (old[`option${previous}${suffix}`] !== undefined) entry[`option${i}${suffix}`] = old[`option${previous}${suffix}`];
+        });
         const solution = old.options[old.correct];
         const correct = solution === undefined ? -1 : entry.options.indexOf(solution);
         entry.correct = correct < 0 ? null : correct;
@@ -1692,6 +1712,12 @@
           } else {
             row.classList.add('removable-option');
             row.append(smallRemove(`Eliminar opción ${letter} de la pregunta ${index + 1}`, () => {
+              for (let mediaIndex = optionIndex; mediaIndex < entry.options.length; mediaIndex++) {
+                for (const suffix of ['Image', 'ImageAlt', 'Images']) {
+                  const key = `option${mediaIndex}${suffix}`, next = `option${mediaIndex + 1}${suffix}`;
+                  if (entry[next] !== undefined) entry[key] = entry[next]; else delete entry[key];
+                }
+              }
               entry.options.splice(optionIndex, 1);
               if (entry.correct === optionIndex) entry.correct = null;
               else if (entry.correct > optionIndex) entry.correct--;
@@ -1705,7 +1731,9 @@
           const correct = document.createElement('input'); correct.type = 'radio'; correct.name = `quiz-correct-${index}`; correct.id = `quiz-radio-${index}-${optionIndex}`;
           correct.checked = entry[solutionKey] === optionIndex;
           correct.setAttribute('aria-label', binary ? `Marcar ${value} como correcta en la afirmación ${index + 1}` : `Marcar la opción ${letter} como correcta en la pregunta ${index + 1}`);
-          correct.addEventListener('change', () => { entry[solutionKey] = optionIndex; clearImportNotice(); }); row.append(correct); group.append(row);
+          correct.addEventListener('change', () => { entry[solutionKey] = optionIndex; clearImportNotice(); }); row.append(correct);
+          if (!binary) row.append(imageEditor(entry, `option${optionIndex}`, index));
+          group.append(row);
         });
         if (!binary) {
           const addOption = document.createElement('button'); addOption.type = 'button'; addOption.className = 'quiet'; addOption.textContent = '＋ Añadir respuesta';
@@ -1832,11 +1860,6 @@
     else resetRound();
   });
   $('mode').addEventListener('change', updateMode);
-  $('load-examples').addEventListener('click', () => {
-    $('remember-bank').checked = false;
-    usingExampleList = true;
-    updateMode();
-  });
   $('scoring-enabled').addEventListener('change', updateMode);
   $('player-count').addEventListener('change', configurePlayers);
   $('game-type').addEventListener('change', configurePlayers);

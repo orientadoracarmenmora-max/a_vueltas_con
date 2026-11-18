@@ -49,3 +49,6 @@ Al abrir la ruleta se cargan siempre los seis ejemplos de funcionamiento. Al cam
 Añadir preguntas empieza con el bloque de texto y Continuar. Después aparecen las tarjetas editables. Los cambios en el bloque y en las tarjetas se sincronizan. La × del enunciado borra la pregunta completa; la × de una respuesta elimina solo esa respuesta. Se pueden añadir preguntas y opciones. Revisar y editar abre el mismo panel con la lista actual. Cerrar descarta los cambios; Guardar cambios los aplica.
 
 El ＋ de la derecha admite una o varias imágenes JPG, PNG o WebP de hasta 12 MB cada una; se optimizan a 1200 píxeles. Cada foto se puede cambiar o quitar por separado. Una se centra y varias se distribuyen en dos columnas. Las fotos de la solución se muestran al responder o revelar la solución. El JSON incluye todas las fotos y el modo de juego; al abrirlo desde cualquier apartado cambia automáticamente de modo.
+
+
+En Tipo test, cada opción tiene un ＋ a la derecha para sus propias imágenes. Al quitar o reordenar opciones, sus imágenes se mantienen asociadas. Las opciones ilustradas se presentan en dos columnas; con ocho equipos, se compactan las fotos y los marcadores para una pantalla de 1280 × 720. El modo de alto contraste conserva el texto y los símbolos de corrección.

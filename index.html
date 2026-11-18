@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf5ef">
   <title>A vueltas con…</title>
-  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-9">
-  <script src="ruleta.js?v=imagenes-20261118-9" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=imagenes-20261118-10">
+  <script src="ruleta.js?v=imagenes-20261118-10" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#stage">Ir a la ruleta</a>
@@ -27,7 +27,7 @@
 <p><strong>Preguntas y respuestas.</strong> Gira y responde. Pulsa Mostrar respuesta para comprobar la solución. Quedará visible hasta el siguiente giro.</p>
 <p><strong>Tipo test.</strong> Gira y toca una de las opciones. La solución aparece en verde con un tick. Si fallas, la opción elegida queda en rojo con una cruz.</p>
 <p><strong>Verdadero o falso.</strong> Gira, lee la afirmación y toca Verdadero o Falso. La corrección usa los mismos colores y símbolos que Tipo test.</p>
-<p>Al entrar tienes seis ejemplos sobre el funcionamiento de la ruleta en cada modo. Si has cargado una lista propia, Probar con ejemplos de este modo recupera la demostración.</p>
+<p>Al entrar tienes seis ejemplos sobre el funcionamiento de la ruleta en cada modo.</p>
 <h3>2. Pega e importa las preguntas</h3>
 <p>Elige el modo y pulsa Añadir preguntas. En esa ventana están las instrucciones, los ejemplos y el botón Importar preguntas.</p>
 <p><strong>Solo preguntas.</strong> Pega una pregunta por línea y pulsa Importar preguntas. Se sustituye la lista actual.</p>
@@ -40,7 +40,7 @@
 <p><strong>Verdadero o falso.</strong> Pega las afirmaciones numeradas, una por línea. Pulsa Continuar y marca Verdadero o Falso en cada afirmación. Después, pulsa Importar preguntas para sustituir la lista actual.</p>
 <p><strong>Ejemplo de afirmaciones.</strong> 1. Puedo practicar con el temporizador.<br>2. Para añadir preguntas tengo que cambiar el tema.</p>
 <p>Si falta una solución, la ventana te indica qué fila debes revisar. Revisar y editar vuelve a abrir este mismo panel con las preguntas, las soluciones y las imágenes. Pulsa Guardar cambios al terminar.</p>
-<p><strong>Imágenes.</strong> En los cuatro modos, pulsa Continuar y revisa las preguntas en el panel. En Tipo test y Verdadero o falso, marca también la correcta. Pulsa el ＋ junto a la pregunta para adjuntar una imagen. Debajo de las opciones puedes añadir una imagen de la solución. También puedes hacerlo en Revisar y editar. Admite JPG, PNG y WebP. Puedes cambiarla o quitarla desde el mismo apartado. La imagen de la respuesta se muestra al revelar la solución o responder al test. Guardar lista incluye las imágenes en el mismo archivo .json para llevarlo al pendrive.</p>
+<p><strong>Imágenes.</strong> En los cuatro modos, pulsa Continuar y revisa las preguntas en el panel. En Tipo test y Verdadero o falso, marca también la correcta. Pulsa el ＋ junto a la pregunta para adjuntar una imagen. En Tipo test también hay un ＋ a la derecha de cada opción para añadir su imagen. Debajo puedes añadir imágenes de la solución. También puedes hacerlo en Revisar y editar. Admite JPG, PNG y WebP. Puedes cambiarla o quitarla desde el mismo apartado. La imagen de la respuesta se muestra al revelar la solución o responder al test. Guardar lista incluye las imágenes en el mismo archivo .json para llevarlo al pendrive.</p>
 <h3>3. Jugar con puntos</h3>
 <p>Elige Sí o No en Jugar con puntos, en cualquiera de los cuatro modos. Con puntos puedes jugar en individual, con un marcador, o por equipos, de dos a ocho. Los equipos se identifican por colores, letras, números o animales.</p>
 <p>En Solo preguntas y Preguntas y respuestas, marca el tick de más uno para un acierto o la cruz de menos uno para un fallo. En Tipo test y Verdadero o falso, el resultado se registra automáticamente al elegir una opción.</p>
@@ -118,7 +118,6 @@
             </select>
           </div>
           <button class="secondary full" id="open-question-editor" type="button" aria-haspopup="dialog" aria-controls="question-editor">＋ Añadir preguntas</button>
-          <button class="quiet" id="load-examples" type="button" hidden>Probar con ejemplos de este modo</button>
           <div>
             <label for="scoring-enabled">Jugar con puntos</label>
             <select id="scoring-enabled">

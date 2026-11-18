@@ -910,3 +910,57 @@ input[type="text"] { width: 100%; }
 .stage #question, .stage:not(:fullscreen, .projected) #question, .stage:is(:fullscreen, .projected) #question, .stage #answer, .stage .closed-choices button { font-size: var(--question-answer-size); line-height: 1.5; }
 
 .stage #question, .stage:not(:fullscreen, .projected) #question, .stage:is(:fullscreen, .projected) #question { font-size: calc(var(--question-answer-size) * 1.08); }
+
+.quiz-review-option.removable-option { grid-template-columns: 30px 1.3rem minmax(0, 1fr) 32px auto; align-items: start; }
+.quiz-review-option > input[type=radio] { margin-top: .45rem; }
+.option-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .25rem; width: 100%; margin-top: .35rem; }
+.option-gallery:has(> img:only-child) { grid-template-columns: minmax(0, 1fr); }
+.option-gallery img { width: 100%; height: 72px; object-fit: contain; border-radius: .35rem; }
+.closed-choices button.has-option-images { display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; }
+@media (min-width: 760px) {
+  .stage { --question-answer-size: clamp(.95rem, calc(.5vw + .55rem), 1.2rem); }
+  .visual-test .closed-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; margin-top: .5rem; }
+  .visual-test .closed-choices button { padding: .4rem .5rem; line-height: 1.3; }
+  .visual-test .entry-gallery { margin: .4rem 0; gap: .35rem; }
+  .visual-test #question-image .entry-image { max-height: 95px; height: 95px; }
+  .visual-test #answer-image .entry-image { max-height: 70px; height: 70px; }
+  .visual-test .result { padding: .65rem; }
+  .visual-test .question-row { gap: .45rem; }
+  .visual-test .question-audio { min-width: 36px; min-height: 36px; padding: .25rem; }
+  .visual-test .result-controls { gap: .35rem; margin-top: .4rem; }
+}
+@media (max-width: 520px) {
+  .quiz-review-option.removable-option { grid-template-columns: 26px 1rem minmax(0, 1fr) 26px 36px; gap: .25rem; }
+  .quiz-review-option .image-editor { max-width: 36px; }
+  .quiz-review-option .image-previews { grid-template-columns: 1fr; }
+  .quiz-review-option .image-editor details[open] { position: absolute; right: 0; z-index: 2; background: var(--surface); max-width: 150px; }
+  .option-gallery img { height: 95px; }
+}
+@media (min-width: 760px) {
+  .visual-test.is-game .option-gallery img { height: 48px; }
+  .visual-test.is-game #question-image .entry-image { height: 58px; max-height: 58px; }
+  .visual-test.is-game .closed-choices button { font-size: .94rem; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] { width: min(100%, 28rem); }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] #scores { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .3rem; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .score { display: block; min-height: 52px; padding: .2rem .3rem; font-size: .75rem; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .score strong { white-space: normal; font-size: .75rem; line-height: 1.1; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .score .streak { font-size: .65rem; }
+}
+@media (min-width: 900px) {
+  .visual-test.is-game .option-gallery img { height: 40px; }
+  .visual-test.is-game #question-image .entry-image { height: 44px; max-height: 44px; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .score strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .score { min-height: 44px; line-height: 1.1; }
+  .quiz-review-card:has(.removable-option) .quiz-correct-heading { padding-inline-end: 44px; }
+}
+
+.team-label-short { display: none; }
+@media (min-width: 900px) {
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .team-label-full { display: none; }
+  .visual-test:is(:fullscreen, .projected) .scoreboard[data-dense] .team-label-short { display: inline; }
+  .visual-test .closed-choices:has(> button:nth-child(5)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) and (min-height: 850px) {
+  .visual-test.is-game .option-gallery img { height: 72px; }
+  .visual-test.is-game #question-image .entry-image { height: 90px; max-height: 90px; }
+}
