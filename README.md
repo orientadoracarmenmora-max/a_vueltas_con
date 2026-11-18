@@ -33,4 +33,5 @@ Tipografía incluida: Josefin Sans, de Santiago Orozco (Google Fonts), bajo lice
 Opciones adicionales incluidas: Quicksand y Raleway (Google Fonts), con sus licencias OFL junto a los archivos.
 
 
-Fiona es una variante de la fuente abierta Handlee (Joe Prince / Admix Designs): proporciones ajustadas y puntos originales en forma de corazón en i y j. Su nombre y archivos son distintos de Peach. Incluye licencia OFL y conserva la atribución original. Josefin Sans sigue siendo la predeterminada.
+
+Fiona v1.002 es una variante de Delius, de Natalia Raices (SIL OFL 1.1), con proporciones ajustadas, M redondeada y corazones sólidos originales en los puntos de i y j. Consulta Fiona-OFL.txt. Josefin Sans sigue siendo la predeterminada.

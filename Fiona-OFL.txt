@@ -1,5 +1,7 @@
-Copyright (c) 2011, Joe Prince, Vissol Ltd. (http://www.vissol.co.uk/mavenpro/)
-with Reserved Font Name "Handlee".
+Copyright (c) 2010, 2011, Natalia Raices,
+Copyright (c) 2011, Igino Marini. (www.ikern.com|mail@iginomarini.com),
+with Reserved Font Names "Delia", "Delia Unicase", "Delius" 
+and "Delius Unicase".
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
@@ -94,4 +96,4 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 
-Fiona is a modified version of Handlee. The original handwriting is by Joe Prince / Admix Designs. This edition adds original heart-shaped dots to i and j and adjusts proportions. The font family was renamed under the OFL reserved-name requirement.
+Fiona version 1.002 is a modified version of Delius by Natalia Raices. This edition adjusts proportions, uses rounded arches for the M, and includes original solid heart dots in i and j. The family is renamed Fiona. It does not contain outlines from Peach.
