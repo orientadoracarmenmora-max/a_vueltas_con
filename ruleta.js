@@ -1743,7 +1743,7 @@
           addOption.addEventListener('click', () => { entry.options.push(''); syncDraftSource(); renderQuizDraft(); }); group.append(addOption);
         }
         const solutionImage = document.createElement('div'); solutionImage.className = 'draft-solution-image';
-        const label = document.createElement('span'); label.textContent = 'Imagen de la solución (opcional)';
+        const label = document.createElement('span'); label.textContent = 'Imagen para mostrar después de responder (opcional)';
         solutionImage.append(label, imageEditor(entry, 'answer', index)); group.append(solutionImage);
       }
       list.append(group);
