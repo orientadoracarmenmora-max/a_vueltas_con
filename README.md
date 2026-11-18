@@ -27,3 +27,5 @@ La aplicación ofrece lectura en español de España, velocidad normal inicial, 
 Publica index.html, estilos.css, ruleta.js, las cuatro capturas y el PDF en la raíz de GitHub Pages.
 
 La guía ampliada incluye 16 apartados, pasos numerados, capturas reales, índice con enlaces y autoría. El PDF contiene 16 páginas con navegación al índice.
+
+Tipografía incluida: Josefin Sans, de Santiago Orozco (Google Fonts), bajo licencia SIL OFL 1.1. Consulta JosefinSans-OFL.txt. La fuente se sirve desde los propios archivos y no necesita servicios externos.

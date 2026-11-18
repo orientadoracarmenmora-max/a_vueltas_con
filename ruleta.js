@@ -647,7 +647,11 @@
 
   function updatePalette() {
     const css = getComputedStyle(root);
-    const token = (name) => css.getPropertyValue(name).trim();
+    const fallback = { '--a':'#71483a', '--b':'#e5b4ad', '--c':'#f2d5bc', '--d':'#8b5260', '--e':'#efc4b6', '--f':'#503129', '--surface':'#fffdfa', '--ink':'#38251f', '--accent':'#582f2a', '--wheel-edge':'#fff7ed' };
+    const token = (name) => {
+      const value = css.getPropertyValue(name).trim();
+      return value && CSS.supports('color', value) ? value : fallback[name];
+    };
     const fills = [...'abcdef'].map((letter) => token(`--${letter}`));
     const empty = token('--surface');
     palette = {
@@ -696,7 +700,7 @@
     const fewQuestions = pool.length <= 4;
     const size = fewQuestions ? 40 : Math.min(49, space * .62);
     const maxLines = fewQuestions ? 4 : Math.max(1, Math.min(3, Math.floor(space / (size * 1.16))));
-    const family = getComputedStyle(root).getPropertyValue('--display').trim();
+    const family = getComputedStyle(root).getPropertyValue('--display').trim() || "'Josefin Sans', Arial, sans-serif";
     measure.font = `bold ${size}px ${family}`;
     const maxWidth = radius * (fewQuestions ? .58 : .52);
     wheelText = { family, size, lines: pool.map(({ question }) => wrapWheelText(question, maxWidth, maxLines)) };
@@ -1010,92 +1014,88 @@
     glassChambers ??= [new Path2D(glassShape), new Path2D(glassShape)];
     const highContrast = palette.highContrast;
     const outline = highContrast ? palette.clockInk : palette.clockAccent;
+    const sand = highContrast ? palette.clockInk : clockGradient(70, 70, 188, 264, [
+      [0, palette.fills[1]], [.6, palette.fills[4]], [1, palette.clockAccent]
+    ]);
     clock.clearRect(0, 0, clockCanvas.width, clockCanvas.height);
+    clock.lineCap = 'round';
+    clock.lineJoin = 'round';
 
-    if (!highContrast) {
-      clock.fillStyle = '#0002';
-      clock.beginPath();
-      clock.ellipse(128, 297, 86, 10, 0, 0, turn);
-      clock.fill();
+    // A light halo echoes the wheel, using the active theme rather than gold metal.
+    clock.save();
+    clock.strokeStyle = outline;
+    clock.globalAlpha = highContrast ? .7 : .15;
+    clock.lineWidth = 2;
+    clock.beginPath();
+    clock.ellipse(128, 162, 112, 143, 0, 0, turn);
+    clock.stroke();
+    clock.restore();
+    for (const x of [40, 216]) {
+      clock.save();
+      clock.globalAlpha = highContrast ? 1 : .45;
+      clock.strokeStyle = outline;
+      clock.lineWidth = 3;
+      clock.beginPath(); clock.moveTo(x, 53); clock.lineTo(x, 271); clock.stroke();
+      clock.restore();
     }
 
-    const glass = highContrast ? palette.empty : clockGradient(53, 0, 203, 0, [
-      [0, '#9eb9b5aa'], [.19, '#ffffffea'], [.38, '#ffffff42'], [.73, '#c1dbd5a0'], [.9, '#ffffffde'], [1, '#819d9d99']
-    ]);
-    const sand = highContrast ? palette.clockInk : clockGradient(58, 0, 198, 0, [
-      [0, '#bc7735'], [.33, '#f8cf7e'], [.63, '#e7af54'], [1, '#a66532']
-    ]);
     const upperLevel = 162 - Math.sqrt(sandFraction) * 108;
-    const lowerLevel = 270 - (1 - sandFraction) ** 1.45 * 105;
+    const lowerLevel = 270 - (1 - sandFraction) ** .6 * 105;
     for (const [index, chamber] of glassChambers.entries()) {
       const lower = index === 1;
-      const level = lower ? lowerLevel : upperLevel;
-      const bottom = lower ? 270 : 162;
       clock.save();
-      if (lower) {
-        clock.translate(0, 324);
-        clock.scale(1, -1);
-      }
+      if (lower) { clock.translate(0, 324); clock.scale(1, -1); }
       clock.clip(chamber);
-      if (lower) {
-        clock.scale(1, -1);
-        clock.translate(0, -324);
-      }
-      clock.fillStyle = glass;
+      if (lower) { clock.scale(1, -1); clock.translate(0, -324); }
+      clock.fillStyle = palette.empty;
       clock.fillRect(49, 54, 158, 216);
-      clock.fillStyle = sand;
-      clock.fillRect(49, level, 158, bottom - level);
       if (!highContrast) {
-        clock.fillStyle = '#75492838';
-        for (let y = Math.ceil(level / 8) * 8; y < bottom; y += 8) {
-          for (let x = 57 + y % 5; x < 204; x += 8) clock.fillRect(x, y, 1.7, 1.7);
-        }
-        clock.fillStyle = '#ffffff52';
-        clock.fillRect(51, level, 154, 2);
+        clock.globalAlpha = .12;
+        clock.fillStyle = palette.fills[1];
+        clock.fillRect(49, 54, 158, 216);
+        clock.globalAlpha = 1;
       }
-      clock.restore();
-      clock.strokeStyle = outline;
-      clock.lineWidth = highContrast ? 5 : 3.3;
-      clock.save();
+      clock.fillStyle = sand;
       if (lower) {
-        clock.translate(0, 324);
-        clock.scale(1, -1);
+        clock.beginPath();
+        clock.moveTo(128, lowerLevel);
+        clock.bezierCurveTo(110, lowerLevel + 17, 76, 265, 49, 270);
+        clock.lineTo(207, 270);
+        clock.bezierCurveTo(180, 265, 146, lowerLevel + 17, 128, lowerLevel);
+        clock.fill();
+      } else {
+        clock.fillRect(49, upperLevel, 158, 162 - upperLevel);
       }
-      clock.stroke(chamber);
+      if (!highContrast) {
+        clock.globalAlpha = .22;
+        clock.strokeStyle = '#fff'; clock.lineWidth = 7;
+        clock.beginPath(); clock.moveTo(74, 66); clock.bezierCurveTo(71, 95, 86, 116, 105, 130); clock.stroke();
+      }
       clock.restore();
+      clock.save();
+      if (lower) { clock.translate(0, 324); clock.scale(1, -1); }
+      clock.strokeStyle = outline; clock.lineWidth = highContrast ? 5 : 3;
+      clock.stroke(chamber); clock.restore();
     }
 
     if (deadline !== null && sandFraction > 0) {
-      clock.strokeStyle = highContrast ? outline : '#ce9044';
-      clock.lineWidth = 2.2;
-      clock.beginPath();
-      clock.moveTo(128, 162);
-      clock.lineTo(128, lowerLevel);
-      clock.stroke();
-      const flow = (sandFraction * timerDuration / 220) % 1;
-      clock.fillStyle = highContrast ? outline : '#f5d489';
-      clock.beginPath();
-      clock.arc(128, 162 + (lowerLevel - 162) * flow, 2.8, 0, turn);
-      clock.fill();
+      clock.strokeStyle = outline; clock.lineWidth = 2;
+      clock.beginPath(); clock.moveTo(128, 162); clock.lineTo(128, lowerLevel); clock.stroke();
+      const flow = (sandFraction * timerDuration / 260) % 1;
+      clock.fillStyle = outline; clock.beginPath();
+      clock.arc(128, 164 + Math.max(0, lowerLevel - 166) * flow, 2.3, 0, turn); clock.fill();
     }
-
-    for (const y of [31, 269]) {
-      const metal = highContrast ? outline : clockGradient(0, y, 0, y + 24, [
-        [0, '#fff2ce'], [.24, '#e7be73'], [.52, '#a96b34'], [.72, '#e6bc71'], [1, '#7e4c2a']
-      ]);
+    for (const y of [36, 270]) {
       clock.beginPath();
-      if (typeof clock.roundRect === 'function') clock.roundRect(38, y, 180, 24, 8);
-      else clock.rect(38, y, 180, 24);
-      clock.fillStyle = metal;
-      clock.fill();
-      clock.strokeStyle = outline;
-      clock.lineWidth = 2;
-      clock.stroke();
+      if (typeof clock.roundRect === 'function') clock.roundRect(30, y, 196, 17, 8.5);
+      else clock.rect(30, y, 196, 17);
+      clock.fillStyle = outline; clock.fill();
       if (!highContrast) {
-        clock.fillStyle = '#fff3d7b3';
-        clock.fillRect(57, y + 5, 142, 2);
+        clock.save(); clock.globalAlpha = .3; clock.strokeStyle = palette.empty; clock.lineWidth = 2;
+        clock.beginPath(); clock.moveTo(48, y + 4); clock.lineTo(208, y + 4); clock.stroke(); clock.restore();
       }
     }
+
   }
 
   function paintSand(remaining) {
@@ -2082,4 +2082,9 @@
   rebuildPool();
   updateMode();
   initSpeech();
+  // Re-measure wheel labels after the bundled webfont has loaded.
+  function refreshLoadedDesign() { prepareWheelText(); updatePalette(); }
+  document.fonts?.ready.then(refreshLoadedDesign);
+  document.querySelector('link[rel="stylesheet"]')?.addEventListener('load', refreshLoadedDesign);
+  window.addEventListener('load', refreshLoadedDesign, { once: true });
 })();
