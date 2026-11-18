@@ -1038,6 +1038,8 @@ input[type="text"] { width: 100%; }
 .guide-step-number { display: inline-flex; padding: .15rem .55rem; background: var(--accent); color: var(--on-accent); border-radius: 1rem; font-weight: 700; }
 .guide-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: .8rem 0 1.8rem; }
 .guide-index a { padding: 1rem; min-height: 4.5rem; display: flex; align-items: center; line-height: 1.5; text-decoration: none; border: 1px solid var(--line); border-radius: .65rem; background: var(--surface); color: var(--ink); font-weight: 650; }
+.guide-steps { padding-left: 1.5rem; margin: .8rem 0 1.4rem; }
+.guide-steps li { padding-left: .3rem; margin: 0 0 .7rem; line-height: 1.6; }
 .guide-format { font: inherit; line-height: 1.6; white-space: pre-wrap; padding: .8rem; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: .6rem; background: var(--surface); overflow-wrap: anywhere; }
 .guide-shot { margin: 1rem 0; }
 .guide-shot-window { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); }
