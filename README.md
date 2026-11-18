@@ -35,3 +35,5 @@ Opciones adicionales incluidas: Quicksand y Raleway (Google Fonts), con sus lice
 
 
 Fiona v1.002 es una variante de Delius, de Natalia Raices (SIL OFL 1.1), con proporciones ajustadas, M redondeada y corazones sólidos originales en los puntos de i y j. Consulta Fiona-OFL.txt. Josefin Sans sigue siendo la predeterminada.
+
+Peach: archivos regular y bold aportados por Carmen desde su instalación, incorporados a su petición. Se conservan los metadatos originales de Hardpeach / Violeta Costas.
