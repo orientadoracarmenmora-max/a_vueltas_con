@@ -1166,3 +1166,19 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 :root[data-font="fiona"] .stage #question,
 :root[data-font="fiona"] .stage #answer,
 :root[data-font="fiona"] .stage .closed-choices button { font-weight: 400; }
+
+/* Fiona ♥: usar la variante negrita también en el título de la partida. */
+:root[data-font="peach"] #stage-title,
+:root[data-font="peach"] .stage #question,
+:root[data-font="peach"] .stage #answer,
+:root[data-font="peach"] .stage .closed-choices button {
+  font-family: var(--display);
+  font-weight: 700;
+}
+:root[data-font="peach"] #wheel-label-layer {
+  font-weight: 700;
+  paint-order: stroke fill;
+  stroke: currentColor;
+  stroke-width: .3px;
+  stroke-linejoin: round;
+}
