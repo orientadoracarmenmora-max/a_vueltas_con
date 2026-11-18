@@ -1028,17 +1028,21 @@ input[type="text"] { width: 100%; }
 
 #guide { width: min(58rem, calc(100% - 2rem)); }
 .guide-manual { padding: 1rem; }
-.guide-chapter { position: relative; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--panel); scroll-margin-top: 5rem; }
+.guide-chapter { position: relative; padding: 1.6rem; margin-bottom: 2rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--panel); scroll-margin-top: 5rem; }
 .guide-chapter h3 { margin: .2rem 0 .45rem; padding-right: 2rem; font-size: 1.2rem; line-height: 1.35; }
-.guide-chapter h4 { margin: 1rem 0 .35rem; }
+.guide-chapter h4 { margin: 1.6rem 0 .75rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line); }
+.guide-back { display: inline-block; margin-top: 1rem; padding: .65rem .9rem; border: 1px solid var(--line); border-radius: .65rem; color: var(--ink); }
+.guide-index a:hover { background: var(--panel); outline: 2px solid var(--accent); }
 .guide-chapter p { margin: .7rem 0; }
 .guide-chapter .guide-subtitle { color: var(--muted); margin-top: 0; }
 .guide-step-number { display: inline-flex; padding: .15rem .55rem; background: var(--accent); color: var(--on-accent); border-radius: 1rem; font-weight: 700; }
-.guide-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; margin-top: .65rem; }
-.guide-index a { padding: .7rem; border: 1px solid var(--line); border-radius: .65rem; background: var(--surface); color: var(--ink); font-weight: 650; }
+.guide-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: .8rem 0 1.8rem; }
+.guide-index a { padding: 1rem; min-height: 4.5rem; display: flex; align-items: center; line-height: 1.5; text-decoration: none; border: 1px solid var(--line); border-radius: .65rem; background: var(--surface); color: var(--ink); font-weight: 650; }
 .guide-format { font: inherit; line-height: 1.6; white-space: pre-wrap; padding: .8rem; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: .6rem; background: var(--surface); overflow-wrap: anywhere; }
 .guide-shot { margin: 1rem 0; }
 .guide-shot-window { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); }
 .guide-shot-window img { position: absolute; max-width: none; height: auto; }
 .guide-shot figcaption { margin-top: .35rem; font-size: .85rem; line-height: 1.5; }
 @media (max-width: 550px) { .guide-index { grid-template-columns: 1fr; } .guide-chapter { padding: .9rem; } }
+
+#guide-contents { scroll-margin-top: 5rem; }
