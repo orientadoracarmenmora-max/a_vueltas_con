@@ -1,6 +1,6 @@
 # A vueltas con
 
-Abre `index.html` en tu navegador. Conserva `estilos.css` y `ruleta.js` en la misma carpeta. La ruleta funciona sin instalación, conexión a internet ni cuenta. La voz de Google puede necesitar internet. La ruleta abre en **Juego con puntos**, con seis preguntas sobre cómo usar la ruleta en clase y sus respuestas listas para probar.
+Abre `index.html` en tu navegador. Conserva `estilos.css` y `ruleta.js` en la misma carpeta. La ruleta funciona sin instalación, conexión a internet ni cuenta. La voz de Google puede necesitar internet. La ruleta abre en **Preguntas y respuestas**, con seis preguntas sobre cómo usar la ruleta en clase y sus respuestas listas para probar.
 
 
 La rueda hace clics suaves mientras gira. Puedes desactivarlos con **Apariencia → Sonido al girar**.
@@ -33,3 +33,13 @@ Al final de la configuración, en **Guardar o abrir una lista** puedes descargar
 3. Guarda y abre la dirección que indique GitHub Pages cuando termine la publicación.
 
 El botón de información abre la guía. Incluye `instrucciones-a-vueltas-con.pdf` junto a los archivos de la aplicación para que se pueda descargar desde la web.
+
+## Verdadero o falso y Tipo test
+
+En Verdadero o falso, pega una afirmación numerada por línea, pulsa **Continuar** y marca **Verdadero** o **Falso** en cada una. En Tipo test, abre **＋ Añadir preguntas** y pega el test entero. Numera los enunciados con 1., 2. y así sucesivamente. Tras cada enunciado, pon al menos dos opciones con letras consecutivas (A), B), C)…), debajo o en la misma línea. A partir de Z), sigue con AA), AB) y así sucesivamente. Pulsa **Continuar**, marca el círculo de la opción correcta en cada pregunta y pulsa **Importar preguntas**. Puedes activar el contador en cualquier modo con **Usar temporizador**, justo debajo de **Jugar con puntos** y antes de **Sonido al girar**.
+
+Durante el juego, toca una opción para comprobarla. Activa **Jugar con puntos** con cualquier tipo de preguntas. En Verdadero o falso y Tipo test la ruleta registra los puntos automáticamente. En los otros modos puedes marcar el resultado manualmente.
+
+En **＋ Añadir preguntas**, la opción **Abrir lista guardada** está disponible en los cuatro modos. Puedes abrir un archivo .json guardado desde la ruleta o cargar un .txt para revisar e importar su contenido.
+
+Al abrir la ruleta se cargan siempre los seis ejemplos de funcionamiento. Al cambiar de modo durante la demostración, los ejemplos se adaptan con sus soluciones. Las listas guardadas en el navegador se abren desde **Abrir lista de este navegador**.

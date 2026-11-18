@@ -24,13 +24,150 @@
   const pointerAngle = -Math.PI / 2;
 
   const exampleQuestions = [
-    ["¿Para qué sirve esta ruleta?", "Para sacar al azar preguntas o retos que tú elijas y usarlos en cualquier asignatura."],
-    ["¿Qué puedo aprender con ella?", "Puedes repasar vocabulario, practicar cálculos o explicar con tus palabras lo que has aprendido."],
-    ["¿Qué puedo hacer en clase?", "Úsala al empezar para recordar la lección anterior o al final para comprobar qué ha entendido el grupo."],
-    ["¿Puedo poner mis propias preguntas?", "Sí. Pega tu lista en «Pega aquí tu lista» y pulsa «Importar preguntas» para sustituir estos ejemplos."],
-    ["¿Cómo compruebo una respuesta?", "Añade las soluciones a tu lista y pulsa «Mostrar respuesta» después de que alguien responda."],
-    ["¿Puedo jugar por equipos?", "Sí. En «Juego con puntos», elige «Por equipos» y configura de dos a ocho equipos. También puedes jugar en individual."]
-  ];
+  [
+    "Antes de jugar, ¿cómo añado una lista de preguntas?",
+    "Elige el modo y pulsa «＋ Añadir preguntas». Pega tu lista, completa la revisión que indique ese modo y pulsa «Importar preguntas»."
+  ],
+  [
+    "Al preparar Preguntas y respuestas, ¿cómo escribo las soluciones?",
+    "Numera cada pregunta y escribe su respuesta en la línea siguiente. También puedes escribir pregunta / respuesta en la misma línea. Después, pulsa «Importar preguntas»."
+  ],
+  [
+    "Al preparar un tipo test, ¿cómo marco las soluciones?",
+    "Pega las preguntas numeradas con sus opciones A), B), C)… y pulsa «Continuar». Marca el círculo a la derecha de la opción correcta de cada pregunta y pulsa «Importar preguntas»."
+  ],
+  [
+    "Al preparar Verdadero o falso, ¿cómo marco las soluciones?",
+    "Pega una afirmación numerada por línea y pulsa «Continuar». Marca Verdadero o Falso en cada afirmación y pulsa «Importar preguntas»."
+  ],
+  [
+    "Durante el juego de Preguntas y respuestas, ¿cómo compruebo mi respuesta?",
+    "Responde en voz alta y pulsa «Mostrar respuesta» para leer la solución. Si has activado los puntos, marca después el acierto o el fallo."
+  ],
+  [
+    "Antes de jugar, ¿cómo activo los puntos y el tiempo?",
+    "Elige «Sí» en «Jugar con puntos» y selecciona Individual o Por equipos. Para responder con un límite de tiempo, activa «Usar temporizador» y elige los segundos."
+  ]
+];
+  const exampleSoloQuestions = [
+  [
+    "Durante el juego de Solo preguntas, ¿cómo respondo?",
+    "Pulsa «Girar ruleta», lee la pregunta y responde en voz alta."
+  ],
+  [
+    "Antes de jugar, ¿dónde pego mi lista de preguntas?",
+    "En la ventana que abre «＋ Añadir preguntas»."
+  ],
+  [
+    "Al preparar Solo preguntas, ¿cómo separo las preguntas de mi lista?",
+    "Escribe una pregunta por línea. Puedes numerarlas con 1., 2. y así sucesivamente."
+  ],
+  [
+    "Si juego a Solo preguntas con puntos, ¿cómo se registra el resultado?",
+    "La persona que dirige el juego pulsa el tick de más uno para un acierto o la cruz de menos uno para un fallo."
+  ],
+  [
+    "Durante el juego, ¿cómo puedo pausar el reloj de arena?",
+    "Pulsa el botón de pausa que aparece al activar el temporizador. Puedes volver a pulsarlo para reanudarlo."
+  ],
+  [
+    "Antes de jugar, ¿qué consigo al activar Sin repeticiones?",
+    "Cada pregunta sale una sola vez por ronda. Reiniciar permite comenzar otra ronda."
+  ]
+];
+  const exampleTests = [
+  [
+    "Durante el juego de Tipo test, ¿cómo respondes?",
+    [
+      "Pulsando el círculo de la ventana de preparación",
+      "Pulsando una opción debajo de la pregunta",
+      "Escribiendo la solución en el título"
+    ],
+    1
+  ],
+  [
+    "Al preparar un test, ¿cómo puedes pegar su contenido?",
+    [
+      "Pegando todas las preguntas numeradas con sus opciones A), B), C)…",
+      "Pegando únicamente las letras de las soluciones",
+      "Escribiendo cada respuesta en el título"
+    ],
+    0
+  ],
+  [
+    "Al preparar un test, ¿qué haces después de pulsar Continuar?",
+    [
+      "Pulsar Girar ruleta para marcar las soluciones",
+      "Esperar a que la ruleta elija las soluciones",
+      "Revisar y marcar el círculo de la opción correcta en cada pregunta"
+    ],
+    2
+  ],
+  [
+    "Después de revisar el test y marcar sus soluciones, ¿qué botón lo carga?",
+    [
+      "Mostrar respuesta",
+      "Importar preguntas",
+      "Girar ruleta"
+    ],
+    1
+  ],
+  [
+    "Si juegas un tipo test con puntos, ¿cómo se registra el acierto o el fallo?",
+    [
+      "La ruleta lo registra al pulsar una opción",
+      "Tienes que marcar otra vez el resultado con un círculo"
+    ],
+    0
+  ],
+  [
+    "Durante un tipo test con temporizador, ¿qué ocurre al agotarse el tiempo?",
+    [
+      "La pregunta queda abierta sin límite de tiempo",
+      "Se muestra la solución y se cierra la pregunta; con puntos se registra un fallo",
+      "Se borra toda la lista"
+    ],
+    1
+  ]
+];
+  const exampleStatements = [
+  [
+    "Durante el juego de Verdadero o falso, respondo pulsando uno de esos dos botones debajo de la afirmación.",
+    0
+  ],
+  [
+    "Al preparar Verdadero o falso, tengo que escribir V o F después de cada frase en el texto pegado.",
+    1
+  ],
+  [
+    "Al preparar las afirmaciones, pulso Continuar y después marco la solución de cada una antes de importar.",
+    0
+  ],
+  [
+    "Durante el juego, tengo que volver a marcar la solución en la ventana de Añadir preguntas.",
+    1
+  ],
+  [
+    "Si activo Jugar con puntos, la ruleta registra automáticamente el resultado cuando pulso Verdadero o Falso.",
+    0
+  ],
+  [
+    "Para jugar a Verdadero o falso siempre tengo que activar el temporizador.",
+    1
+  ]
+];
+
+  function examplesForMode() {
+    if ($('mode').value === 'quiz') {
+      return exampleTests.map(([question, options, correct]) => ({ question, answer: '', options: [...options], correct }));
+    }
+    if ($('mode').value === 'binary') {
+      return exampleStatements.map(([question, binaryCorrect]) => ({ question, answer: '', binaryCorrect }));
+    }
+    const examples = $('mode').value === 'questions' ? exampleSoloQuestions : exampleQuestions;
+    return examples.map(([question, answer]) => ({ question, answer }));
+  }
+
   let questions = exampleQuestions.map(([question, answer]) => ({ question, answer }));
   let usingExampleList = true;
   let pool = [];
@@ -44,13 +181,13 @@
   let currentQuestion = '';
   const speech = 'SpeechSynthesisUtterance' in window ? window.speechSynthesis : null;
   let utterance = null;
+  let speechPauseTimeout;
   let speechStartTimeout;
-  let useAlternateMobileVoice = false;
   let speakingFrom = '';
   let pendingSpeechFrom = '';
   let preferredVoice = '';
   let textScale = 100;
-  const bankKey = 'ruleta-lista-1';
+  const bankKey = 'ruleta-test-lista-1';
   const teamColors = [
     { name: 'Azul', color: '#2976c3' }, { name: 'Verde', color: '#29864a' },
     { name: 'Rojo', color: '#c34149' }, { name: 'Morado', color: '#8051b0' },
@@ -77,8 +214,20 @@
   let currentAnswer = '';
   let currentEntry = null;
 
-  const isGame = () => $('mode').value === 'game';
+  const isGame = () => $('scoring-enabled').value === 'yes';
   const isTeamGame = () => $('game-type').value === 'team';
+  const isQuiz = () => $('mode').value === 'quiz';
+  const timerEnabled = () => $('timed').checked;
+  const closedMode = () => ['binary', 'quiz'].includes($('mode').value);
+  function optionLetter(index) {
+    let label = '';
+    for (let number = index + 1; number > 0; number = Math.floor((number - 1) / 26)) {
+      label = String.fromCharCode(65 + (number - 1) % 26) + label;
+    }
+    return label;
+  }
+  const binaryOptions = ['Verdadero', 'Falso'];
+  const entryOptions = (entry) => $('mode').value === 'binary' ? binaryOptions : (entry.options || []);
   const hasAnswers = () => $('mode').value !== 'questions';
 
   function parseQuestions(text) {
@@ -180,7 +329,45 @@
       const fields = document.createElement('div');
       fields.className = 'edit-content';
       fields.append(input);
-      if (hasAnswers()) {
+      if (closedMode()) {
+        const binary = $('mode').value === 'binary';
+        const solutions = document.createElement('select');
+        solutions.setAttribute('aria-label', `Solución de la pregunta ${index + 1}`);
+        const solutionKey = binary ? 'binaryCorrect' : 'correct';
+        const updateSolutions = () => {
+          solutions.replaceChildren(new Option('Marca la solución', ''));
+          entryOptions(value).forEach((text, i) => {
+            if (text.trim()) solutions.add(new Option(binary ? text : `${optionLetter(i)}. ${text}`, String(i)));
+          });
+          solutions.value = String(value[solutionKey] ?? '');
+          if (solutions.selectedIndex < 0) solutions.selectedIndex = 0;
+        };
+        if (!binary) {
+          value.options ??= [];
+          for (let i = 0; i < Math.max(4, value.options.length); i++) {
+            const letter = optionLetter(i);
+            const option = document.createElement('input');
+            option.type = 'text';
+            option.className = 'option-edit';
+            option.value = value.options[i] || '';
+            option.placeholder = `Opción ${letter}`;
+            option.setAttribute('aria-label', `Opción ${letter}, pregunta ${index + 1}`);
+            option.addEventListener('input', () => {
+              while (value.options.length <= i) value.options.push('');
+              value.options[i] = option.value.trim();
+              updateSolutions();
+              rebuildPool();
+            });
+            fields.append(option);
+          }
+        }
+        updateSolutions();
+        solutions.addEventListener('change', () => {
+          value[solutionKey] = solutions.value === '' ? null : Number(solutions.value);
+          rebuildPool();
+        });
+        fields.append(solutions);
+      } else if (hasAnswers()) {
         const answer = document.createElement('textarea');
         answer.rows = 2;
         answer.value = value.answer;
@@ -202,9 +389,17 @@
   }
 
   function rebuildPool() {
-    pool = questions.filter((entry) => entry.question.trim());
-    $('demo-hint').hidden = !usingExampleList;
-    $('total').textContent = pool.length;
+    pool = questions.filter((entry) => {
+      if (!entry.question.trim()) return false;
+      if (!closedMode()) return true;
+      const binary = $('mode').value === 'binary';
+      const options = entryOptions(entry);
+      const correct = binary ? entry.binaryCorrect : entry.correct;
+      return Number.isInteger(correct) && Boolean(options[correct]?.trim())
+        && (binary || Boolean(options[0]?.trim() && options[1]?.trim()));
+    });
+    $('load-examples').hidden = usingExampleList;
+    $('total').textContent = closedMode() ? `${pool.length}/${questions.length} listas` : pool.length;
     rememberBank();
     prepareWheelText();
     resetRound();
@@ -217,6 +412,56 @@
     $('question').textContent = value;
     $('result').hidden = !value;
     $('question-announcement').textContent = value;
+    const choices = $('closed-choices');
+    choices.replaceChildren();
+    $('closed-feedback').textContent = '';
+    $('listen-answer').hidden = true;
+    choices.hidden = !value || !closedMode() || !currentEntry;
+    if (!choices.hidden) {
+      const binary = $('mode').value === 'binary';
+      const correct = binary ? currentEntry.binaryCorrect : currentEntry.correct;
+      entryOptions(currentEntry).forEach((text, index) => {
+        if (!text.trim()) return;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'quiet';
+        button.textContent = binary ? text : `${optionLetter(index)}. ${text}`;
+        button.dataset.optionIndex = String(index);
+        button.addEventListener('click', () => {
+          finishClosedAnswer(index, correct, button);
+        });
+        choices.append(button);
+      });
+    }
+    delete choices.dataset.answered;
+  }
+
+  function finishClosedAnswer(index, correct = currentEntry.correct, button = null) {
+    const choices = $('closed-choices');
+    if (choices.dataset.answered) return;
+    const timedOut = index === null || (closedMode() && deadline !== null && performance.now() >= deadline);
+    choices.dataset.answered = 'true';
+    for (const option of choices.children) {
+      option.setAttribute('aria-disabled', 'true');
+      const verdict = Number(option.dataset.optionIndex) === correct ? 'correct'
+        : !timedOut && option === button ? 'incorrect' : null;
+      if (verdict) {
+        option.dataset.verdict = verdict;
+        option.append(verdict === 'correct' ? ' ✓' : ' ✕');
+      }
+    }
+    if (isGame()) gradeTurn(index === correct, timedOut);
+    else {
+      pendingTurn = false;
+      stopTimer();
+      if (timedOut) showTimerExpired();
+      updateControls();
+    }
+    const solution = entryOptions(currentEntry)[correct];
+    $('listen-answer').hidden = false;
+    $('closed-feedback').textContent = timedOut
+      ? `Tiempo agotado. La respuesta correcta es ${solution}.`
+      : '';
   }
 
   function resetRound() {
@@ -242,15 +487,16 @@
   function updateControls() {
     const unique = $('no-repeat').checked;
     const remaining = pool.length - drawn.size;
-    $('progress').textContent = !pool.length ? 'Sin preguntas en la ruleta' : unique
+    $('progress').textContent = !pool.length ? (closedMode() && questions.length
+      ? 'Marca las soluciones en Revisar y editar para empezar' : 'Sin preguntas en la ruleta') : unique
       ? `${pool.length} ${pool.length === 1 ? 'pregunta' : 'preguntas'} · ${remaining} por salir`
       : `${pool.length} ${pool.length === 1 ? 'pregunta' : 'preguntas'} · Con repeticiones`;
     const exhausted = unique && pool.length > 0 && remaining === 0;
     stage.classList.toggle('is-spinning', animation !== null);
-    $('grading').hidden = !isGame() || !pendingTurn;
+    $('grading').hidden = !isGame() || closedMode() || !pendingTurn;
     $('finish-game').hidden = !isGame() || gameFinished;
     $('finish-game').disabled = pendingTurn || animation !== null || !players.some((player) => player.turns > 0);
-    $('reveal').hidden = !hasAnswers() || !currentAnswer || !$('answer').hidden;
+    $('reveal').hidden = closedMode() || !hasAnswers() || !currentAnswer || !$('answer').hidden;
     $('spin').setAttribute('aria-disabled', String(!pool.length || exhausted || animation !== null || pendingTurn || gameFinished));
     $('spin-label').textContent = animation !== null ? 'Girando…' : gameFinished ? 'Partida terminada' : exhausted ? 'Ronda completa' : 'Girar ruleta';
     $('reset').disabled = pool.length === 0 && !isGame();
@@ -469,10 +715,8 @@
       currentEntry = pool[winner];
       currentAnswer = currentEntry.answer.trim();
       setResult(currentEntry.question.trim());
-      if (isGame()) {
-        pendingTurn = true;
-        startTimer();
-      }
+      pendingTurn = isGame() || (closedMode() && timerEnabled());
+      startTimer();
       updateControls();
       if (document.fullscreenElement === stage || stage.classList.contains('projected')) {
         stage.scrollTop = 0;
@@ -507,8 +751,9 @@
 
   function setAnswerVisible(visible) {
     $('answer').hidden = !visible;
+    $('listen-answer').hidden = !visible || !currentAnswer;
     $('answer').textContent = visible ? currentAnswer : '';
-    $('reveal').hidden = !hasAnswers() || !currentAnswer || !$('answer').hidden;
+    $('reveal').hidden = closedMode() || !hasAnswers() || !currentAnswer || !$('answer').hidden;
   }
 
   function defaultTeamLabel(index) {
@@ -749,7 +994,7 @@
   function tickTimer() {
     const remaining = deadline - performance.now();
     if (remaining <= 0) {
-      gradeTurn(false, true);
+      expireTurn();
       return;
     }
     showTime(remaining);
@@ -766,7 +1011,7 @@
   }
 
   function startTimer() {
-    if (!$('timed').checked) return;
+    if (!timerEnabled()) return;
     const duration = timerSeconds();
     timerDuration = duration * 1000;
     deadline = performance.now() + timerDuration;
@@ -777,8 +1022,16 @@
     tickTimer();
   }
 
+  function expireTurn() {
+    if (closedMode()) finishClosedAnswer(null, $('mode').value === 'binary' ? currentEntry.binaryCorrect : currentEntry.correct);
+    else if (isGame()) gradeTurn(false, true);
+    else {
+      stopTimer();
+      showTimerExpired();
+    }
+  }
+
   function toggleTimerPause() {
-    if (!pendingTurn) return;
     if (pausedTime !== null) {
       deadline = performance.now() + pausedTime;
       pausedTime = null;
@@ -791,7 +1044,7 @@
     if (deadline === null) return;
     const remaining = deadline - performance.now();
     if (remaining <= 0) {
-      gradeTurn(false, true);
+      expireTurn();
       return;
     }
     clearTimeout(timerId);
@@ -814,6 +1067,13 @@
     return leaders.length === 1 ? `Gana ${leaders[0]}.` : `Empate: ${leaders.join(', ')}.`;
   }
 
+  function showTimerExpired() {
+    paintSand(0);
+    $('timer-value').textContent = 'Tiempo agotado';
+    $('timer-panel').setAttribute('data-expired', '');
+    $('timer-panel').hidden = false;
+  }
+
   function gradeTurn(correct, timedOut = false) {
     if (!pendingTurn) return;
     if (deadline !== null && performance.now() >= deadline) timedOut = true;
@@ -821,13 +1081,7 @@
     const moveFocus = $('grading').contains(document.activeElement) || document.activeElement === $('pause-timer');
     pendingTurn = false;
     stopTimer();
-    if (timedOut) {
-      paintSand(0);
-      $('timer-value').textContent = 'Tiempo agotado';
-      $('timer-panel').setAttribute('data-expired', '');
-      $('pause-timer').hidden = true;
-      $('timer-panel').hidden = false;
-    }
+    if (timedOut) showTimerExpired();
     const player = players[playerIndex];
     player.turns++;
     player.streak = correct ? player.streak + 1 : 0;
@@ -845,7 +1099,14 @@
   }
 
   function updateMode() {
+    if (usingExampleList) questions = examplesForMode();
     const game = isGame();
+    $('open-import').hidden = closedMode();
+    const quiz = isQuiz();
+    $('quiz-import').hidden = !quiz;
+    $('quiz-review').hidden = true;
+    $('closed-import').hidden = $('mode').value !== 'binary';
+    $('notice').textContent = '';
     $('game-settings').hidden = !game;
     $('scoreboard').hidden = !game;
     stage.classList.toggle('is-game', game);
@@ -861,8 +1122,8 @@
     $('example-inline').hidden = !answers;
     $('example-questions').hidden = answers;
     renderEditor();
+    rebuildPool();
     if (game) configurePlayers();
-    else resetRound();
   }
 
   function browserVoicePreference(userAgent) {
@@ -896,7 +1157,7 @@
     for (const voice of voices) select.add(new Option(`${voice.name} (${voice.lang})`, voice.voiceURI));
     const selected = voices.find((voice) => voice.voiceURI === preferredVoice);
     if (selected) select.value = preferredVoice;
-    return selected || (mobile && !useAlternateMobileVoice ? null : automatic);
+    return selected || automatic;
   }
 
   function isAppleMobile() {
@@ -906,29 +1167,44 @@
 
   function rulesText() {
     const mode = $('mode').value;
-    const draw = 'Pulsa Girar ruleta. Cuando aparezca la pregunta, responde en voz alta.';
-    if (mode === 'questions') return draw;
-    const reveal = 'Pulsa Mostrar respuesta para ver la solución. Quedará visible hasta el siguiente giro.';
-    if (mode === 'answers') return `${draw} ${reveal}`;
-
-    const teams = isTeamGame();
-    const participation = teams
-      ? `Pueden jugar de dos a ocho equipos. En esta partida hay ${players.length}. Responde el equipo resaltado. Antes de girar, puedes tocar la tarjeta de otro equipo para darle el turno.`
-      : 'Esta partida es individual. Responde las preguntas para sumar puntos en tu marcador.';
-    let timer = '';
-    if ($('timed').checked) {
-      const seconds = timerSeconds();
-      const time = seconds === 1 ? 'un segundo' : `${seconds} segundos`;
-      timer = `Cuando aparece la pregunta, tienes ${time} para responder. Usa el icono de pausa para detener el reloj mientras valoras la respuesta. Si se agota el tiempo, se registra un fallo automáticamente.`;
+    const scoring = isGame();
+    const automatic = closedMode();
+    const teams = scoring && isTeamGame();
+    const instructions = {
+      questions: 'Has elegido Solo preguntas. Pulsa Girar ruleta y responde en voz alta a la pregunta que aparezca.',
+      answers: 'Has elegido Preguntas y respuestas. Pulsa Girar ruleta y responde. Después, pulsa Mostrar respuesta para comprobar la solución. Quedará visible hasta el siguiente giro.',
+      binary: 'Has elegido Verdadero o falso. Pulsa Girar ruleta, lee la afirmación y toca Verdadero o Falso.',
+      quiz: 'Has elegido Tipo test. Pulsa Girar ruleta, lee la pregunta y toca la opción que consideres correcta.'
+    };
+    const parts = [instructions[mode]];
+    if (automatic) {
+      parts.push('La solución se marca en verde con un tick. Si eliges una opción incorrecta, se marca en rojo con una cruz.');
     }
-    const scoring = 'Marca el botón de más uno si la respuesta es correcta y el de menos uno si es incorrecta. El acierto suma un punto. El fallo resta un punto y corta la racha.';
-    const streak = teams
-      ? 'Tres aciertos seguidos del mismo equipo suman tres puntos extra.'
-      : 'Tres aciertos seguidos suman tres puntos extra.';
-    const next = teams
-      ? 'El turno pasa al siguiente equipo. Al final gana quien tenga más puntos.'
-      : 'Después de marcar el resultado, vuelve a girar para seguir jugando.';
-    return [participation, draw, timer, reveal, scoring, streak, next].filter(Boolean).join(' ');
+    if (scoring) {
+      parts.push(teams
+        ? `Jugáis con puntos y ${players.length} equipos. Responde el equipo resaltado. Antes de girar, puedes tocar otra tarjeta para cambiar el turno.`
+        : 'Juegas en individual con puntos. Tus resultados se anotan en un único marcador.');
+      parts.push(automatic
+        ? 'La ruleta anota el resultado automáticamente cuando eliges una opción.'
+        : 'Marca el tick de más uno si la respuesta es correcta, o la cruz de menos uno si es incorrecta.');
+      parts.push('Cada acierto suma un punto. Cada fallo resta un punto y reinicia la racha. Tres aciertos seguidos suman tres puntos extra.');
+    }
+    if (timerEnabled()) {
+      const seconds = timerSeconds();
+      parts.push(`El temporizador está activado. Tienes ${seconds === 1 ? 'un segundo' : seconds + ' segundos'} desde que aparece la pregunta. Puedes pausarlo y reanudarlo con el botón del reloj.`);
+      if (scoring) {
+        parts.push('Si se agota el tiempo, se registra un fallo y se resta un punto.');
+      } else {
+        parts.push('Si se agota el tiempo, aparece el aviso de Tiempo agotado.');
+      }
+      if (automatic) parts.push('Al responder o agotarse el tiempo, la ruleta muestra la solución y cierra esa pregunta.');
+    } else {
+      parts.push('El temporizador está desactivado. Puedes responder a tu ritmo.');
+    }
+    if (teams) parts.push('Después de cada respuesta o fallo por tiempo, el turno pasa al siguiente equipo.');
+    parts.push('Vuelve a pulsar Girar ruleta para continuar.');
+    if ($('no-repeat').checked) parts.push('Está activada la opción Sin repeticiones. Cada pregunta sale una sola vez por ronda.');
+    return parts.join(' ');
   }
 
   function updateSpeechControls() {
@@ -939,15 +1215,17 @@
     $('listen').title = label;
     $('listen-icon').textContent = readingQuestion ? '■' : '🔊';
     $('listen-rules').textContent = speakingFrom === 'rules' ? 'Detener reglas' : 'Escuchar reglas';
+    $('listen-answer').textContent = speakingFrom === 'answer' ? '■ Detener respuesta' : '🔊 Escuchar respuesta';
     $('test-voice').textContent = speakingFrom === 'test-voice' ? 'Detener prueba' : 'Probar voz';
   }
 
   function stopSpeech() {
     clearTimeout(speechStartTimeout);
+    clearTimeout(speechPauseTimeout);
     pendingSpeechFrom = '';
+    speakingFrom = '';
     if (utterance) {
       utterance = null;
-      speakingFrom = '';
       speech.cancel();
     }
     $('speech-status').textContent = '';
@@ -962,13 +1240,17 @@
       $('speech-status').textContent = 'Este navegador no ofrece lectura en voz alta.';
       return;
     }
+    let parts = (Array.isArray(text) ? text : [text]).filter((part) => part.trim());
+    // Keep iOS reading in the original tap, without delayed follow-up utterances.
+    if (isAppleMobile()) parts = [parts.map(part => /[.!?…]$/.test(part.trim()) ? part.trim() : `${part.trim()}.`).join(' ')] ;
+    if (!parts.length) return;
+    let partIndex = 0;
     const voice = refreshVoices();
-    const mobile = isAppleMobile();
     const unavailable = 'La lectura no ha podido iniciarse. Vuelve a tocar el botón o elige otra voz en «Elegir voz y velocidad».';
     pendingSpeechFrom = control;
 
     function read(selectedVoice) {
-      const request = new SpeechSynthesisUtterance(text);
+      const request = new SpeechSynthesisUtterance(parts[partIndex]);
       if (selectedVoice) request.voice = selectedVoice;
       request.lang = 'es-ES';
       request.rate = Number($('rate').value);
@@ -984,8 +1266,7 @@
       };
       const retry = (cancelPending = false) => {
         if (utterance !== request) return;
-        if (mobile || !selectedVoice || started) {
-          if (mobile && !preferredVoice) useAlternateMobileVoice = !selectedVoice;
+        if (!selectedVoice || started) {
           finish(unavailable);
           if (cancelPending) speech.cancel();
           return;
@@ -1004,12 +1285,22 @@
         clearTimeout(speechStartTimeout);
       };
       request.onend = () => {
-        if (started) finish();
-        else retry();
+        if (utterance !== request) return;
+        if (!started) {
+          retry();
+          return;
+        }
+        if (partIndex + 1 === parts.length) {
+          finish();
+          return;
+        }
+        utterance = null;
+        partIndex++;
+        speechPauseTimeout = setTimeout(() => read(selectedVoice), 500);
       };
       request.onerror = () => retry();
       utterance = request;
-      speechStartTimeout = setTimeout(() => retry(true), 4000);
+      speechStartTimeout = setTimeout(() => retry(true), 10000);
       try {
         if (speech.paused) speech.resume();
         speech.speak(request);
@@ -1030,10 +1321,10 @@
   }
 
   function initSpeech() {
+    $('rate').value = '1';
     try {
       const saved = JSON.parse(localStorage.getItem('ruleta-lectura'));
       preferredVoice = saved?.voice || '';
-      if (['0.65', '0.9', '1', '1.1'].includes(saved?.rate)) $('rate').value = saved.rate;
     } catch {
       // Keep the default settings if storage is unavailable.
     }
@@ -1065,22 +1356,12 @@
   function decodeBank(text) {
     const bank = JSON.parse(text);
     if (!Array.isArray(bank?.questions) || !bank.questions.every((entry) =>
-      typeof entry?.question === 'string' && typeof entry?.answer === 'string')) {
+      typeof entry?.question === 'string' && typeof entry?.answer === 'string'
+      && (entry.options === undefined || (Array.isArray(entry.options)
+        && entry.options.every((option) => typeof option === 'string'))))) {
       throw new Error('Lista no válida');
     }
     return bank.questions;
-  }
-
-  function restoreBank() {
-    try {
-      const saved = localStorage.getItem(bankKey);
-      if (saved === null) return;
-      questions = decodeBank(saved);
-      usingExampleList = JSON.parse(saved).usingExampleList === true;
-      $('remember-bank').checked = true;
-    } catch {
-      // Use the example list when there is no readable saved list.
-    }
   }
 
   function downloadBank() {
@@ -1144,16 +1425,188 @@
     }
   }
 
+  function pastedLines(text) {
+    return text.trimEnd().split(/\r\n?|\n/).map((line) => line.trim().replace(/^\d+[.)-]\s+/, ''));
+  }
+
+  function inlineQuiz(prompt) {
+    const separator = prompt.lastIndexOf(' / ');
+    const key = separator < 0 ? null : /^([A-Z]+)(?:[.)]|$)/i.exec(prompt.slice(separator + 3).trim());
+    if (separator >= 0 && !key) return null;
+    const fields = (separator < 0 ? prompt : prompt.slice(0, separator)).split(/\s+([A-Za-z]|[A-Z]{2,})[.)]\s+/);
+    const [question, ...pairs] = fields;
+    const options = [];
+    for (let index = 0; index < pairs.length; index += 2) {
+      if (pairs[index].toUpperCase() !== optionLetter(options.length)) return null;
+      options.push(pairs[index + 1].trim());
+    }
+    const correct = key ? options.findIndex((_, index) => optionLetter(index) === key[1].toUpperCase()) : null;
+    return question.trim() && options.length >= 2 && (correct === null || options[correct]) && options.every(Boolean)
+      ? { question, answer: '', options, correct } : null;
+  }
+
+  function parseQuizText(text) {
+    const clean = text.trim();
+    if (!clean) return [];
+    const numbered = /^\d+[.)]\s+/.test(clean);
+    const blocks = numbered ? clean.split(/\r?\n(?=[ \t]*\d+[.)][ \t]+)/) : [clean];
+    return blocks.map((block) => inlineQuiz(block.trim().replace(/^\d+[.)]\s+/, '').replace(/\s+/g, ' ')));
+  }
+
+  let quizDraft = [];
+  const clearImportNotice = () => { $('import-notice').textContent = ''; };
+  const quizSource = $('quiz-source');
+
+  $('open-question-editor').addEventListener('click', () => {
+    clearImportNotice();
+    $('question-editor').showModal();
+    $(isQuiz() ? 'quiz-source' : closedMode() ? 'closed-questions' : 'source').focus({ preventScroll: true });
+    $('question-editor').scrollTop = 0;
+  });
+
+  for (const source of [quizSource, $('closed-questions')]) {
+    source.addEventListener('input', () => {
+      $('quiz-review').hidden = true;
+      clearImportNotice();
+    });
+  }
+
+  function renderQuizDraft() {
+    const list = $('quiz-draft-list');
+    list.replaceChildren();
+    const binary = !isQuiz();
+    const solutionKey = binary ? 'binaryCorrect' : 'correct';
+    quizDraft.forEach((entry, index) => {
+      const group = document.createElement('fieldset');
+      group.className = 'quiz-review-card';
+      const number = document.createElement('legend');
+      number.textContent = `${binary ? 'Afirmación' : 'Pregunta'} ${index + 1}`;
+      const question = document.createElement('textarea');
+      question.rows = 2;
+      question.value = entry.question;
+      question.setAttribute('aria-label', `Enunciado de la pregunta ${index + 1}`);
+      question.addEventListener('input', () => { entry.question = question.value; clearImportNotice(); });
+      const heading = document.createElement('p');
+      heading.className = 'quiz-correct-heading hint';
+      heading.textContent = 'Correcta';
+      group.append(number, question, heading);
+      entryOptions(entry).forEach((value, optionIndex) => {
+        const row = document.createElement('div');
+        row.className = 'quiz-review-option';
+        const letter = optionLetter(optionIndex);
+        if (binary) {
+          row.classList.add('binary-review-option');
+          const label = document.createElement('label');
+          label.textContent = value;
+          label.htmlFor = `quiz-radio-${index}-${optionIndex}`;
+          row.append(label);
+        } else {
+          const label = document.createElement('label');
+          label.textContent = `${letter})`;
+          const option = document.createElement('input');
+          option.type = 'text';
+          option.value = value;
+          option.id = `quiz-option-${index}-${letter}`;
+          option.setAttribute('aria-label', `Opción ${letter} de la pregunta ${index + 1}`);
+          label.htmlFor = option.id;
+          option.addEventListener('input', () => { entry.options[optionIndex] = option.value; clearImportNotice(); });
+          row.append(label, option);
+        }
+        const correct = document.createElement('input');
+        correct.type = 'radio';
+        correct.name = `quiz-correct-${index}`;
+        correct.id = `quiz-radio-${index}-${optionIndex}`;
+        correct.checked = entry[solutionKey] === optionIndex;
+        correct.setAttribute('aria-label', binary
+          ? `Marcar ${value} como correcta en la afirmación ${index + 1}`
+          : `Marcar la opción ${letter} como correcta en la pregunta ${index + 1}`);
+        correct.addEventListener('change', () => { entry[solutionKey] = optionIndex; clearImportNotice(); });
+        row.append(correct);
+        group.append(row);
+      });
+      list.append(group);
+    });
+  }
+
+  $('prepare-quiz').addEventListener('click', () => {
+    quizDraft = parseQuizText(quizSource.value);
+    const invalid = quizDraft.indexOf(null);
+    if (!quizDraft.length || invalid !== -1) {
+      $('quiz-review').hidden = true;
+      $('import-notice').textContent = !quizDraft.length ? 'Pega al menos una pregunta.'
+        : `Revisa la pregunta ${invalid + 1}. Escribe al menos dos opciones con letras consecutivas: A), B), C)…`;
+      return;
+    }
+    showClosedReview();
+  });
+
+  function showClosedReview() {
+    clearImportNotice();
+    $('quiz-review-title').textContent = isQuiz() ? 'Marca la respuesta correcta de cada pregunta'
+      : 'Marca Verdadero o Falso en cada afirmación';
+    renderQuizDraft();
+    $('quiz-review').hidden = false;
+    $('quiz-review-title').focus();
+  }
+
+  $('save-quiz-draft').addEventListener('click', () => {
+    if ($('quiz-review').hidden) return;
+    const binary = !isQuiz();
+    const solutionKey = binary ? 'binaryCorrect' : 'correct';
+    const invalid = quizDraft.findIndex((entry) =>
+      !entry.question.trim() || entryOptions(entry).some((option) => !option.trim())
+      || !Number.isInteger(entry[solutionKey]));
+    if (invalid !== -1) {
+      $('import-notice').textContent = binary
+        ? `Revisa la afirmación ${invalid + 1}. Completa la frase y marca Verdadero o Falso.`
+        : `Revisa la pregunta ${invalid + 1}. Completa el enunciado y las opciones, y marca la correcta.`;
+      $('quiz-draft-list').children[invalid].querySelector('input[type="radio"]').focus();
+      return;
+    }
+    questions = binary ? quizDraft : [...(usingExampleList ? [] : questions), ...quizDraft];
+    usingExampleList = false;
+    $('notice').textContent = `${binary ? 'Afirmaciones importadas' : 'Preguntas añadidas'}: ${quizDraft.length}.`;
+    quizDraft = [];
+    $('quiz-draft-list').replaceChildren();
+    $('quiz-review').hidden = true;
+    (binary ? $('closed-questions') : quizSource).value = '';
+    $('question-editor').close();
+    renderEditor();
+    rebuildPool();
+  });
+
+  function parseBinaryText(text) {
+    return pastedLines(text).filter(Boolean).map((line) => {
+      const key = /\s*\/\s*(V(?:erdadero)?|F(?:also)?)[.!]?$/i.exec(line);
+      return {
+        question: key ? line.slice(0, key.index).trim() : line,
+        answer: '',
+        binaryCorrect: key ? Number(key[1][0].toUpperCase() === 'F') : null
+      };
+    });
+  }
+
+  $('build-closed').addEventListener('click', () => {
+    const entries = parseBinaryText($('closed-questions').value);
+    if (!entries.length || entries.some(({ question }) => !question)) {
+      $('import-notice').textContent = 'Escribe al menos una afirmación, una por línea.';
+      return;
+    }
+    quizDraft = entries;
+    showClosedReview();
+  });
+
   $('import').addEventListener('click', () => {
     const imported = parseEntries($('source').value);
     if (!imported.length) {
-      $('notice').textContent = 'Pega al menos una pregunta.';
+      $('import-notice').textContent = 'Pega al menos una pregunta.';
       return;
     }
     questions = imported;
     usingExampleList = false;
     renderEditor();
     rebuildPool();
+    $('question-editor').close();
     $('notice').textContent = imported.length === 1 ? '1 pregunta importada.' : `${imported.length} preguntas importadas.`;
   });
   $('add').addEventListener('click', () => {
@@ -1167,6 +1620,12 @@
     else resetRound();
   });
   $('mode').addEventListener('change', updateMode);
+  $('load-examples').addEventListener('click', () => {
+    $('remember-bank').checked = false;
+    usingExampleList = true;
+    updateMode();
+  });
+  $('scoring-enabled').addEventListener('change', updateMode);
   $('player-count').addEventListener('change', configurePlayers);
   $('game-type').addEventListener('change', configurePlayers);
   $('scores').addEventListener('click', (event) => {
@@ -1180,14 +1639,18 @@
     renderScoreboard();
   });
   $('timed').addEventListener('change', () => {
-    $('time-settings').hidden = !$('timed').checked;
-    if (!pendingTurn) return;
-    if ($('timed').checked) startTimer();
+    $('time-settings').hidden = !timerEnabled();
+    if (!currentEntry || animation !== null || $('closed-choices').dataset.answered
+      || (isGame() && !pendingTurn) || (!isGame() && !$('answer').hidden)) return;
+    pendingTurn = isGame() || (closedMode() && timerEnabled());
+    if (timerEnabled()) startTimer();
     else stopTimer();
+    updateControls();
   });
   $('pause-timer').addEventListener('click', toggleTimerPause);
   $('seconds').addEventListener('change', timerSeconds);
   $('reveal').addEventListener('click', () => {
+    if (!isGame()) stopTimer();
     setAnswerVisible(true);
     $('answer').focus({ preventScroll: true });
   });
@@ -1202,7 +1665,7 @@
   function updateTopic() {
     const topic = $('topic').value.trim();
     $('stage-topic').textContent = topic ? ` ${topic}` : '…';
-    document.title = topic ? `A vueltas con ${topic}` : 'A vueltas con…';
+    document.title = topic ? `A vueltas con ${topic}` : 'A vueltas con… · Ruleta test';
     $('stage-title').title = document.title;
   }
 
@@ -1239,20 +1702,69 @@
     applyAccessibility();
   });
   $('save-bank').addEventListener('click', downloadBank);
-  $('open-bank').addEventListener('change', async (event) => {
-    const [file] = event.target.files;
+  async function openBank(event) {
+    const [file] = event.currentTarget.files;
     if (!file) return;
-    event.target.value = '';
+    const fromMode = event.currentTarget.id === 'open-bank-in-mode';
+    event.currentTarget.value = '';
+    const notice = $(fromMode ? 'import-notice' : 'bank-notice');
+    const mode = $('mode').value;
     try {
-      questions = decodeBank(await file.text());
+      const content = await file.text();
+      if (fromMode && (!$('question-editor').open || $('mode').value !== mode)) return;
+      if (fromMode && /\.txt$/i.test(file.name)) {
+        const source = $(isQuiz() ? 'quiz-source' : closedMode() ? 'closed-questions' : 'source');
+        source.value = content;
+        $('quiz-review').hidden = true;
+        notice.textContent = isQuiz() || closedMode()
+          ? 'Texto cargado. Pulsa Continuar para revisar las soluciones.'
+          : 'Texto cargado. Pulsa Importar preguntas.';
+        source.focus();
+        return;
+      }
+      const opened = decodeBank(content);
+      if (fromMode && opened.length && (isQuiz() ? !opened.some((entry) => entry.options?.length >= 2)
+        : mode === 'binary' && !opened.some((entry) => Number.isInteger(entry.binaryCorrect)))) {
+        notice.textContent = 'Esta lista no contiene soluciones para el modo seleccionado. Abre una lista de este modo o carga un archivo de texto.';
+        return;
+      }
+      questions = opened;
       usingExampleList = false;
       renderEditor();
       rebuildPool();
-      $('bank-notice').textContent = `Lista abierta · ${pool.length} ${pool.length === 1 ? 'pregunta' : 'preguntas'}.`;
+      const message = `Lista abierta · ${pool.length} ${pool.length === 1 ? 'pregunta' : 'preguntas'}.`;
+      if (fromMode) {
+        $('quiz-review').hidden = true;
+        $('question-editor').close();
+        $('notice').textContent = message;
+      } else {
+        notice.textContent = message;
+      }
     } catch {
-      $('bank-notice').textContent = 'No se pudo abrir la lista. Elige un archivo descargado desde la ruleta.';
+      notice.textContent = 'No se pudo abrir la lista. Comprueba que el archivo tenga el formato indicado.';
+    }
+  }
+
+  for (const id of ['open-bank', 'open-bank-in-mode']) $(id).addEventListener('change', openBank);
+  $('open-remembered-bank').addEventListener('click', () => {
+    try {
+      const saved = localStorage.getItem(bankKey);
+      if (!saved) {
+        $('bank-notice').textContent = 'Todavía no hay una lista guardada en este navegador.';
+        return;
+      }
+      const opened = decodeBank(saved);
+      questions = opened;
+      usingExampleList = false;
+      $('remember-bank').checked = true;
+      renderEditor();
+      rebuildPool();
+      $('bank-notice').textContent = 'Lista del navegador abierta. Selecciona el modo correspondiente a tu lista.';
+    } catch {
+      $('bank-notice').textContent = 'No se ha podido abrir la lista guardada en este navegador.';
     }
   });
+
   $('remember-bank').addEventListener('change', () => {
     if ($('remember-bank').checked) {
       rememberBank();
@@ -1269,7 +1781,22 @@
     if (!guide.open) guide.showModal();
   });
   $('listen-rules').addEventListener('click', () => speak(rulesText(), 'rules'));
-  $('listen').addEventListener('click', () => speak(currentQuestion, 'listen'));
+  $('listen').addEventListener('click', () => {
+    const parts = [currentQuestion];
+    if (closedMode() && currentEntry) {
+      entryOptions(currentEntry).forEach((answer, index) => {
+        if (!answer.trim()) return;
+        parts.push(isQuiz() ? `Opción ${optionLetter(index)}.` : `Opción ${index + 1}.`, answer);
+      });
+    }
+    speak(parts, 'listen');
+  });
+  $('listen-answer').addEventListener('click', () => {
+    const solution = closedMode() && currentEntry
+      ? entryOptions(currentEntry)[isQuiz() ? currentEntry.correct : currentEntry.binaryCorrect]
+      : currentAnswer;
+    speak(solution || '', 'answer');
+  });
   $('test-voice').addEventListener('click', () => speak('Así se escucharán las preguntas de la ruleta.', 'test-voice'));
   $('voice').addEventListener('change', () => {
     preferredVoice = $('voice').value;
@@ -1310,7 +1837,8 @@
   mobileLayout.addEventListener('change', syncLayoutOrder);
   syncLayoutOrder();
   updateTopic();
-  restoreBank();
+  questions = examplesForMode();
+  usingExampleList = true;
   pool = questions.filter((entry) => entry.question.trim());
   applyAccessibility();
   rebuildPool();
