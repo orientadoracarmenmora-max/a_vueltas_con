@@ -1043,6 +1043,7 @@ input[type="text"] { width: 100%; }
 .guide-shot-window { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); }
 .guide-shot-window img { position: absolute; max-width: none; height: auto; }
 .guide-shot figcaption { margin-top: .35rem; font-size: .85rem; line-height: 1.5; }
+@media (min-width: 768px) { .guide-chapter p:not(.guide-subtitle) { text-align: justify; } }
 @media (max-width: 550px) { .guide-index { grid-template-columns: 1fr; } .guide-chapter { padding: .9rem; } }
 
 #guide-contents { scroll-margin-top: 5rem; }
