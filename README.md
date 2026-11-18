@@ -1,58 +1,27 @@
-# A vueltas con
+# A vueltas con…
 
-Abre `index.html` en tu navegador. Conserva `estilos.css` y `ruleta.js` en la misma carpeta. La ruleta funciona sin instalación, conexión a internet ni cuenta. La voz de Google puede necesitar internet. La ruleta abre en **Preguntas y respuestas**, con seis preguntas sobre cómo usar la ruleta en clase y sus respuestas listas para probar.
+Herramienta de aula en HTML, CSS y JavaScript. No requiere registro ni API.
 
+## Modos
+- Solo preguntas: conversación y respuestas abiertas.
+- Preguntas y respuestas: solución preparada que se revela después.
+- Tipo test: dos o más opciones y una correcta.
+- Verdadero o falso: afirmaciones con solución marcada al prepararlas.
 
-La rueda hace clics suaves mientras gira. Puedes desactivarlos con **Apariencia → Sonido al girar**.
+Jugar con puntos es independiente del modo. Al entrar está activado, con temporizador de 45 segundos. Permite participación individual o de dos a ocho equipos. Seis equipos se presentan en dos filas de tres en la vista amplia.
 
-## Modos de juego
+## Preparación
+Añadir preguntas empieza con el bloque de texto y Continuar. Después se revisan las tarjetas, se marcan las soluciones y se añaden imágenes opcionales. Los cambios del bloque y las tarjetas se sincronizan. Revisar y editar abre el mismo panel. La rueda muestra siempre las preguntas; los textos largos se abrevian en los sectores.
 
-- **Solo preguntas.** Pega una pregunta por línea o una lista numerada.
-- **Preguntas y respuestas.** Numera cada pregunta y escribe su respuesta en la línea siguiente, por ejemplo `1. ¿Cuál es la capital de Portugal?` y debajo `Lisboa`. También puedes poner la pareja en la misma línea, como `1. ¿Cuál es la capital de Portugal? / Lisboa`. Deja un espacio a cada lado de la barra `/`. Puedes mezclar los formatos, editar las parejas y revelar la solución con **Mostrar respuesta**. La solución queda visible hasta el siguiente giro.
-- **Juego con puntos.** Puedes jugar de forma individual, con un único marcador, o de 2 a 8 equipos. Los equipos se pueden identificar por colores, letras, números o animales. El turno avanza automáticamente al siguiente equipo. Antes de girar, puedes tocar la tarjeta de otro equipo en el marcador. El profesorado marca **✓ Acierto** (+1) o **✕ Fallo** (−1). Cada tres aciertos seguidos del mismo equipo se añaden 3 puntos y empieza otra racha. Un fallo corta la racha. El temporizador empieza activado con 30 segundos y puedes desmarcarlo. El reloj de arena y la cuenta atrás aparecen junto a la ruleta. Cuando el alumnado responda, pulsa el icono **Pausar tiempo** justo debajo de la pregunta. Puedes revelar la solución, marcar el resultado o reanudar la cuenta atrás. La arena baja al ritmo de la cuenta atrás y se queda quieta al parar el reloj. Al agotarse, registra un único fallo y pasa el turno. Las puntuaciones pueden bajar de cero.
-- Con **Sin repeticiones**, la partida termina al calificar la última pregunta. También puedes usar **Terminar partida** entre turnos. La clasificación muestra los empates. **Reiniciar partida** borra puntos y rachas para jugar de nuevo.
+El + de cada enunciado, respuesta y opción de test permite adjuntar imágenes JPG, PNG o WebP. Cada foto se puede cambiar o quitar. Las fotos de la solución aparecen tras responder o revelar la respuesta.
 
-## En clase
+## Guardar y abrir
+Guardar lista descarga un JSON con preguntas, soluciones, fotos y modo. Al abrirlo desde cualquier apartado, se cambia al modo correspondiente. El título se recupera si está incluido. El tiempo y los equipos se configuran en la partida.
 
-1. Selecciona un modo, pega tus preguntas y pulsa **Importar preguntas**. En **Solo preguntas** también puedes pegar una lista como `1. ¿Qué observas? 2. ¿Por qué ocurre?`. Cada importación sustituye la lista anterior.
-2. Despliega **Revisar y editar** si quieres modificar, añadir o eliminar preguntas. La ruleta omite las entradas vacías. Si pegas dos veces el mismo texto, tendrás dos entradas.
-3. Todas las preguntas de la lista entran automáticamente en la ruleta. Si pegas 20 preguntas, tendrás 20 preguntas en juego.
-4. Pulsa **Girar ruleta**. Con **Sin repeticiones**, cada entrada de la lista puede salir una vez por ronda. **Reiniciar ronda** vuelve a habilitar todas las preguntas de esa misma lista.
-5. Escribe el **Título de la partida** encima de las preguntas. En **Apariencia**, elige entre siete temas y nueve tipografías, incluidas dos caligráficas. La fuente se aplica a la pregunta, la respuesta y el texto de los sectores. En **Mostrar en la ruleta**, elige preguntas (opción inicial) o números para cualquiera de los temas. Se usan las fuentes del dispositivo o una equivalente si falta la elegida. Usa el icono de **Pantalla completa** en la esquina inferior derecha para proyectar la ruleta y la pregunta juntas. Pulsa **Esc** o el botón de salida para volver.
+## Ayuda y presentación
+El botón i abre una guía con índice, ejemplos de aula y capturas estáticas, sin ampliaciones. También permite descargar instrucciones-a-vueltas-con.pdf. Las capturas guia-01-pegar.jpg a guia-04-imagenes.jpg deben acompañar a la web.
 
-En **Accesibilidad** puedes cambiar el tamaño de letra con A− y A+, elegir Arial o Verdana, cambiar entre blanco sobre negro y negro sobre blanco o girar sin animación. **Restablecer diseño original** quita los ajustes visuales de accesibilidad.
+La aplicación ofrece lectura en español de España, velocidad normal inicial, temas, fuentes, contraste y ajustes de tamaño. La disponibilidad de la voz depende del navegador y del dispositivo. Pantalla completa proyecta la partida; los equipos quedan debajo de la ruleta en los test.
 
-El icono junto a la pregunta lee esa pregunta. **Escuchar reglas** explica cómo se juega en el modo seleccionado y menciona el tiempo solo si está activado. En **Elegir voz y velocidad** puedes probar una voz en español de España y ajustar la velocidad. La opción automática prefiere Google español en Chrome y Mónica en Safari cuando están disponibles. El navegador puede recordar tus preferencias de voz y velocidad.
-
-Al final de la configuración, en **Guardar o abrir una lista** puedes descargar tus preguntas y respuestas para llevarlas a otro dispositivo o activar **Recordar lista en este dispositivo**. La copia del navegador se guarda solo en ese navegador. Los ajustes visuales duran mientras la página está abierta.
-
-## GitHub Pages
-
-1. Sube `index.html`, `estilos.css` y `ruleta.js` a la raíz de la rama `main` de tu repositorio.
-2. En **Settings → Pages**, elige **Deploy from a branch** y selecciona **main** y **/ (root)**.
-3. Guarda y abre la dirección que indique GitHub Pages cuando termine la publicación.
-
-El botón de información abre la guía. Incluye `instrucciones-a-vueltas-con.pdf` junto a los archivos de la aplicación para que se pueda descargar desde la web.
-
-## Verdadero o falso y Tipo test
-
-En Verdadero o falso, pega una afirmación numerada por línea, pulsa **Continuar** y marca **Verdadero** o **Falso** en cada una. En Tipo test, abre **＋ Añadir preguntas** y pega el test entero. Numera los enunciados con 1., 2. y así sucesivamente. Tras cada enunciado, pon al menos dos opciones con letras consecutivas (A), B), C)…), debajo o en la misma línea. A partir de Z), sigue con AA), AB) y así sucesivamente. Pulsa **Continuar**, marca el círculo de la opción correcta en cada pregunta y pulsa **Importar preguntas**. Puedes activar el contador en cualquier modo con **Usar temporizador**, justo debajo de **Jugar con puntos** y antes de **Sonido al girar**.
-
-Durante el juego, toca una opción para comprobarla. Activa **Jugar con puntos** con cualquier tipo de preguntas. En Verdadero o falso y Tipo test la ruleta registra los puntos automáticamente. En los otros modos puedes marcar el resultado manualmente.
-
-En **＋ Añadir preguntas**, la opción **Abrir lista guardada** está disponible en los cuatro modos. Puedes abrir un archivo .json guardado desde la ruleta o cargar un .txt para revisar e importar su contenido.
-
-Al abrir la ruleta se cargan siempre los seis ejemplos de funcionamiento. Al cambiar de modo durante la demostración, los ejemplos se adaptan con sus soluciones. Las listas guardadas en el navegador se abren desde **Abrir lista de este navegador**.
-
-
-## Panel de preparación y revisión
-Añadir preguntas empieza con el bloque de texto y Continuar. Después aparecen las tarjetas editables. Los cambios en el bloque y en las tarjetas se sincronizan. La × del enunciado borra la pregunta completa; la × de una respuesta elimina solo esa respuesta. Se pueden añadir preguntas y opciones. Revisar y editar abre el mismo panel con la lista actual. Cerrar descarta los cambios; Guardar cambios los aplica.
-
-El ＋ de la derecha admite una o varias imágenes JPG, PNG o WebP de hasta 12 MB cada una; se optimizan a 1200 píxeles. Cada foto se puede cambiar o quitar por separado. Una se centra y varias se distribuyen en dos columnas. Las fotos de la solución se muestran al responder o revelar la solución. El JSON incluye todas las fotos y el modo de juego; al abrirlo desde cualquier apartado cambia automáticamente de modo.
-
-
-En Tipo test, cada opción tiene un ＋ a la derecha para sus propias imágenes. Al quitar o reordenar opciones, sus imágenes se mantienen asociadas. Las opciones ilustradas se presentan en dos columnas; con ocho equipos, se compactan las fotos y los marcadores para una pantalla de 1280 × 720. El modo de alto contraste conserva el texto y los símbolos de corrección.
-
-En pantalla completa, los equipos quedan debajo de la ruleta para ampliar las imágenes del enunciado y las opciones. Seis equipos se muestran en dos filas de tres.
-
-La guía del botón i incluye índice, ejemplos de aula y capturas reales. Se descarga en un PDF de siete páginas. Al abrir, Jugar con puntos y Usar temporizador están activados, con 45 segundos.
+## Publicación
+Publica index.html, estilos.css, ruleta.js, las cuatro capturas y el PDF en la raíz de GitHub Pages.

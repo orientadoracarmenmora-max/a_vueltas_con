@@ -679,7 +679,7 @@
 
   function prepareWheelText() {
     wheelNeedsRedraw = true;
-    if (!pool.length || $('wheel-labels').value !== 'questions') return;
+    if (!pool.length) return;
     const radius = wheelSize / 2 - 2;
     const space = radius * .37 * 2 * Math.sin(Math.PI / Math.max(2, pool.length));
     const fewQuestions = pool.length <= 4;
@@ -696,7 +696,7 @@
     const radius = center - 2;
     const slice = turn / pool.length;
     const unique = $('no-repeat').checked;
-    const showQuestions = $('wheel-labels').value === 'questions';
+    const showQuestions = true;
     const distance = radius * (showQuestions && pool.length <= 4 ? .59 : .65);
     const sectors = document.createDocumentFragment();
     const labels = document.createDocumentFragment();
@@ -1914,10 +1914,6 @@
   });
   $('font').addEventListener('change', (event) => {
     root.dataset.font = event.target.value;
-    prepareWheelText();
-    paint();
-  });
-  $('wheel-labels').addEventListener('change', () => {
     prepareWheelText();
     paint();
   });
