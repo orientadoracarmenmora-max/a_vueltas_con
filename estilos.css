@@ -1006,7 +1006,7 @@ input[type="text"] { width: 100%; }
 }
 @media (min-width: 900px) {
   :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .stage-card {
-    --wheel-diameter: clamp(15rem, min(47vh, calc(100vh - 24rem)), 32rem);
+    --wheel-diameter: clamp(14rem, min(47vh, calc(100vh - 26.5rem)), 32rem);
     grid-template-areas: "heading heading heading" "speech speech speech" "wheel timer question" "spin timer question" "score . question" "actions actions actions";
     grid-template-columns: minmax(0, var(--wheel-diameter)) clamp(5rem, 8vw, 7rem) minmax(0, min(43vw, 34rem));
     grid-template-rows: auto auto auto auto 1fr auto;
