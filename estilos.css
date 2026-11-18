@@ -1241,3 +1241,11 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
   :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .scoreboard #scores { row-gap: .65rem; }
   :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .play-area #spin { margin-top: .5rem; }
 }
+
+@media (min-width: 900px) {
+  :is(.visual-test, .quiz-mode):is(:fullscreen, .projected) .play-area .result {
+    align-self: end;
+    justify-self: end;
+    margin-bottom: .5rem;
+  }
+}
