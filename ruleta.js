@@ -81,7 +81,8 @@
     [
       "Pulsando el círculo de la ventana de preparación",
       "Pulsando una opción debajo de la pregunta",
-      "Escribiendo la solución en el título"
+      "Escribiendo la solución en el título",
+      "Cambiando el tema de la rueda"
     ],
     1
   ],
@@ -90,7 +91,8 @@
     [
       "Pegando todas las preguntas numeradas con sus opciones A), B), C)…",
       "Pegando únicamente las letras de las soluciones",
-      "Escribiendo cada respuesta en el título"
+      "Escribiendo cada respuesta en el título",
+      "Pegando solo las preguntas, sin ninguna opción"
     ],
     0
   ],
@@ -99,7 +101,8 @@
     [
       "Pulsar Girar ruleta para marcar las soluciones",
       "Esperar a que la ruleta elija las soluciones",
-      "Revisar y marcar el círculo de la opción correcta en cada pregunta"
+      "Revisar y marcar el círculo de la opción correcta en cada pregunta",
+      "Cambiar el nombre de los equipos para guardar las soluciones"
     ],
     2
   ],
@@ -108,7 +111,8 @@
     [
       "Mostrar respuesta",
       "Importar preguntas",
-      "Girar ruleta"
+      "Girar ruleta",
+      "Escuchar reglas"
     ],
     1
   ],
@@ -116,7 +120,9 @@
     "Si juegas un tipo test con puntos, ¿cómo se registra el acierto o el fallo?",
     [
       "La ruleta lo registra al pulsar una opción",
-      "Tienes que marcar otra vez el resultado con un círculo"
+      "Tienes que marcar otra vez el resultado con un círculo",
+      "Se registra al cambiar el diseño de la rueda",
+      "Hay que escribir los puntos en el título"
     ],
     0
   ],
@@ -125,7 +131,8 @@
     [
       "La pregunta queda abierta sin límite de tiempo",
       "Se muestra la solución y se cierra la pregunta; con puntos se registra un fallo",
-      "Se borra toda la lista"
+      "Se borra toda la lista",
+      "Se suman puntos aunque no respondas"
     ],
     1
   ]
