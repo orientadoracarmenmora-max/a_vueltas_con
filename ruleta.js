@@ -354,7 +354,7 @@
     const plus = document.createElement('summary'); plus.textContent = '＋';
     plus.setAttribute('aria-label', kind.startsWith('option') ? `Imagen de la ${subject} de la pregunta ${index + 1}` : `Imagen de la ${subject} ${index + 1}`); plus.title = `Añadir imagen a la ${subject}`;
     const attach = document.createElement('button'); attach.type = 'button'; attach.className = 'quiet'; attach.textContent = 'Adjuntar imagen';
-    const chooser = document.createElement('input'); chooser.type = 'file'; chooser.accept = 'image/jpeg,image/png,image/webp'; chooser.multiple = true; chooser.hidden = true;
+    const chooser = document.createElement('input'); chooser.name = `image-${kind}-${index}`; chooser.type = 'file'; chooser.accept = 'image/jpeg,image/png,image/webp'; chooser.multiple = true; chooser.hidden = true;
     const previews = document.createElement('div'); previews.className = 'image-previews';
     const notice = document.createElement('p'); notice.setAttribute('role', 'status');
     const store = images => {
@@ -374,7 +374,7 @@
         remove.addEventListener('click', () => { const images = entryImages(entry, kind); images.splice(i, 1); store(images); refresh(); notice.textContent = 'Imagen eliminada.'; plus.focus(); });
         const change = document.createElement('button'); change.type = 'button'; change.className = 'quiet'; change.textContent = 'Cambiar';
         change.setAttribute('aria-label', `Cambiar imagen ${i + 1} de la ${subject} ${index + 1}`);
-        const replacement = document.createElement('input'); replacement.type = 'file'; replacement.accept = chooser.accept; replacement.hidden = true;
+        const replacement = document.createElement('input'); replacement.name = `replace-image-${kind}-${index}-${i}`; replacement.type = 'file'; replacement.accept = chooser.accept; replacement.hidden = true;
         change.addEventListener('click', () => replacement.click());
         replacement.addEventListener('change', async () => {
           const file = replacement.files[0]; replacement.value = ''; if (!file) return;
@@ -408,6 +408,7 @@
       const row = document.createElement('div');
       row.className = 'edit-row';
       const input = document.createElement('textarea');
+      input.name = `question-${index}`;
       input.rows = 2;
       input.value = value.question;
       input.setAttribute('aria-label', `Pregunta ${index + 1}`);
@@ -437,6 +438,7 @@
       if (closedMode()) {
         const binary = $('mode').value === 'binary';
         const solutions = document.createElement('select');
+        solutions.name = `solution-${index}`;
         solutions.setAttribute('aria-label', `Solución de la pregunta ${index + 1}`);
         const solutionKey = binary ? 'binaryCorrect' : 'correct';
         const updateSolutions = () => {
@@ -452,6 +454,7 @@
           for (let i = 0; i < Math.max(4, value.options.length); i++) {
             const letter = optionLetter(i);
             const option = document.createElement('input');
+            option.name = `option-${index}-${i}`;
             option.type = 'text';
             option.className = 'option-edit';
             option.value = value.options[i] || '';
@@ -474,6 +477,7 @@
         fields.append(solutions, imageEditor(value, 'answer', index));
       } else if (hasAnswers()) {
         const answer = document.createElement('textarea');
+        answer.name = `answer-${index}`;
         answer.rows = 2;
         answer.value = value.answer;
         answer.placeholder = 'Respuesta';
@@ -1691,7 +1695,7 @@
     quizDraft.forEach((entry, index) => {
       const group = document.createElement('div'); group.className = 'quiz-review-card'; group.setAttribute('role', 'group'); group.setAttribute('aria-labelledby', `draft-heading-${index}`);
       const number = document.createElement('h4'); number.id = `draft-heading-${index}`; number.textContent = `${binary ? 'Afirmación' : 'Pregunta'} ${index + 1}`;
-      const question = document.createElement('textarea'); question.rows = 2; question.value = entry.question;
+      const question = document.createElement('textarea'); question.name = `draft-question-${index}`; question.rows = 2; question.value = entry.question;
       question.setAttribute('aria-label', `Enunciado de la pregunta ${index + 1}`);
       question.addEventListener('input', () => { entry.question = question.value; draftChanged(); });
       const promptRow = document.createElement('div'); promptRow.className = 'image-field with-remove';
@@ -1702,7 +1706,7 @@
           const add = document.createElement('button'); add.type = 'button'; add.className = 'quiet'; add.textContent = '＋ Añadir respuesta';
           add.addEventListener('click', () => { delete entry.answerRemoved; renderQuizDraft(); }); group.append(add);
         } else {
-          const answer = document.createElement('textarea'); answer.rows = 2; answer.value = entry.answer || ''; answer.placeholder = 'Respuesta';
+          const answer = document.createElement('textarea'); answer.name = `draft-answer-${index}`; answer.rows = 2; answer.value = entry.answer || ''; answer.placeholder = 'Respuesta';
           answer.setAttribute('aria-label', `Respuesta de la pregunta ${index + 1}`);
           answer.addEventListener('input', () => { entry.answer = answer.value; draftChanged(); });
           const answerRow = document.createElement('div'); answerRow.className = 'image-field with-remove';
