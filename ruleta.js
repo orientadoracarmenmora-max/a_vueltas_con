@@ -1665,7 +1665,7 @@
   function updateTopic() {
     const topic = $('topic').value.trim();
     $('stage-topic').textContent = topic ? ` ${topic}` : '…';
-    document.title = topic ? `A vueltas con ${topic}` : 'A vueltas con… · Ruleta test';
+    document.title = topic ? `A vueltas con ${topic}` : 'A vueltas con…';
     $('stage-title').title = document.title;
   }
 
