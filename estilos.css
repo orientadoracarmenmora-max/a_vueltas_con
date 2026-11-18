@@ -1040,6 +1040,7 @@ input[type="text"] { width: 100%; }
 .guide-index a { padding: 1rem; min-height: 4.5rem; display: flex; align-items: center; line-height: 1.5; text-decoration: none; border: 1px solid var(--line); border-radius: .65rem; background: var(--surface); color: var(--ink); font-weight: 650; }
 .guide-steps { padding-left: 1.5rem; margin: .8rem 0 1.4rem; }
 .guide-steps li { padding-left: .3rem; margin: 0 0 .7rem; line-height: 1.6; }
+.guide-author { text-align: center; padding: 1.5rem 1rem; margin-top: 1.5rem; border-top: 1px solid var(--line); color: var(--ink); font-weight: 600; }
 .guide-format { font: inherit; line-height: 1.6; white-space: pre-wrap; padding: .8rem; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: .6rem; background: var(--surface); overflow-wrap: anywhere; }
 .guide-shot { margin: 1rem 0; }
 .guide-shot-window { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); }
