@@ -1182,3 +1182,9 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
   stroke-width: .3px;
   stroke-linejoin: round;
 }
+
+:root[data-font="peach"] #stage-title { font-size: clamp(1.8rem, 4.5vw, 4rem); }
+:root[data-font="peach"] .stage:not(:fullscreen, .projected) #stage-title { font-size: clamp(1.8rem, 6cqi, 3rem); }
+@media (min-width: 741px) and (max-height: 780px) {
+  :root[data-font="peach"] .stage:is(:fullscreen, .projected) #stage-title { font-size: clamp(1.95rem, 3.8vw, 3.35rem); }
+}
