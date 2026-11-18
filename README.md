@@ -25,3 +25,5 @@ La aplicación ofrece lectura en español de España, velocidad normal inicial, 
 
 ## Publicación
 Publica index.html, estilos.css, ruleta.js, las cuatro capturas y el PDF en la raíz de GitHub Pages.
+
+La guía ampliada incluye 16 apartados, pasos numerados, capturas reales, índice con enlaces y autoría. El PDF contiene 16 páginas con navegación al índice.
