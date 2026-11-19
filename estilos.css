@@ -1249,3 +1249,18 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
     margin-bottom: .5rem;
   }
 }
+
+/* Reloj compacto en teléfonos, también en vista proyectada. */
+@media (max-width: 740px) {
+  #stage .play-area .timer-panel {
+    width: 4rem; max-width: 4rem; flex: 0 0 4rem;
+    justify-self: center; align-self: center;
+    padding: .3rem .2rem .4rem;
+    border-radius: 2rem 2rem .9rem .9rem;
+    margin-inline: auto;
+  }
+  #stage .play-area .hourglass-dial { width: 2.35rem; height: auto; }
+  #stage .play-area #timer-value { font-size: 1.05rem; line-height: 1.25; }
+  #stage .play-area .clock-caption { font-size: .48rem; letter-spacing: .07em; }
+  #stage .play-area .timer-panel[data-expired] #timer-value { font-size: .62rem; }
+}
