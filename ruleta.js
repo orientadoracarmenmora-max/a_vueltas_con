@@ -178,6 +178,7 @@
   let questions = exampleQuestions.map(([question, answer]) => ({ question, answer }));
   let usingExampleList = true;
   let pool = [];
+  let nextSequence = 0;
   const drawn = new Set();
   let angle = 0;
   let animation = null;
@@ -592,6 +593,7 @@
   }
 
   function resetRound() {
+    nextSequence = 0;
     stopSpeech();
     stopTimer();
     pendingTurn = false;
@@ -828,7 +830,10 @@
     if ($('spin').getAttribute('aria-disabled') === 'true') return;
     const unique = $('no-repeat').checked;
     const candidates = pool.map((_, index) => index).filter((index) => !unique || !drawn.has(index));
-    const winner = candidates[Math.floor(Math.random() * candidates.length)];
+    if (!candidates.length) return;
+    const winner = $('question-order').value === 'list'
+      ? (candidates.find((index) => index >= nextSequence) ?? candidates[0])
+      : candidates[Math.floor(Math.random() * candidates.length)];
     stopSpeech();
     stopTimer();
     currentEntry = null;
@@ -840,6 +845,7 @@
     const finish = () => {
       animation = null;
       angle = target;
+      nextSequence = (winner + 1) % pool.length;
       if (unique) drawn.add(winner);
       wheelNeedsRedraw = true;
       paint();
@@ -1334,6 +1340,7 @@
     }
     if (teams) parts.push('Después de cada respuesta o fallo por tiempo, el turno pasa al siguiente equipo.');
     parts.push('Vuelve a pulsar Girar ruleta para continuar.');
+    parts.push($('question-order').value === 'list' ? 'Las preguntas salen en el orden de la lista.' : 'Las preguntas salen en orden aleatorio.');
     if ($('no-repeat').checked) parts.push('Está activada la opción Sin repeticiones. Cada pregunta sale una sola vez por ronda.');
     return parts.join(' ');
   }
@@ -1477,7 +1484,7 @@
   function rememberBank() {
     if (!$('remember-bank').checked) return;
     try {
-      localStorage.setItem(bankKey, JSON.stringify({ questions, usingExampleList, mode: $('mode').value, title: $('topic').value }));
+      localStorage.setItem(bankKey, JSON.stringify({ questions, usingExampleList, mode: $('mode').value, title: $('topic').value, order: $('question-order').value }));
     } catch {
       $('remember-bank').checked = false;
       $('bank-notice').textContent = 'El navegador no ha podido guardar la lista. Puedes descargarla.';
@@ -1504,6 +1511,7 @@
 
   function restoreBank(text, opened) {
     const saved = JSON.parse(text);
+    $('question-order').value = saved.order === 'list' ? 'list' : 'random';
     let mode = ['questions', 'answers', 'quiz', 'binary'].includes(saved.mode) ? saved.mode : null;
     if (!mode) mode = opened.some(entry => Array.isArray(entry.options) && entry.options.length >= 2) ? 'quiz'
       : opened.some(entry => Number.isInteger(entry.binaryCorrect)) ? 'binary'
@@ -1518,7 +1526,7 @@
   }
 
   function downloadBank() {
-    const url = URL.createObjectURL(new Blob([JSON.stringify({ version: 2, mode: $('mode').value, title: $('topic').value, questions }, null, 2)], { type: 'application/json' }));
+    const url = URL.createObjectURL(new Blob([JSON.stringify({ version: 2, mode: $('mode').value, title: $('topic').value, order: $('question-order').value, questions }, null, 2)], { type: 'application/json' }));
     const link = document.createElement('a');
     link.href = url;
     link.download = 'lista-ruleta.json';
@@ -1622,6 +1630,7 @@
     $('closed-import').hidden = $('mode').value !== 'binary';
     clearImportNotice();
     draftSource().value = '';
+    document.querySelectorAll('input[name="draft-question-order"]').forEach((radio) => { radio.checked = radio.value === $('question-order').value; });
     $('question-editor').showModal();
     draftSource().focus({preventScroll: true});
     $('question-editor').scrollTop = 0;
@@ -1807,6 +1816,7 @@
       $('quiz-draft-list').children[invalid].querySelector('textarea').focus();
       return;
     }
+    $('question-order').value = document.querySelector('input[name="draft-question-order"]:checked').value;
     for (const entry of quizDraft) delete entry.answerRemoved;
     questions = editingExisting || !isQuiz() ? quizDraft : [...(usingExampleList ? [] : questions), ...quizDraft];
     usingExampleList = false;
@@ -1857,6 +1867,7 @@
     editingExisting = true;
     quizDraft = JSON.parse(JSON.stringify(questions));
     $('question-editor-title').textContent = 'Revisar y editar';
+    document.querySelectorAll('input[name="draft-question-order"]').forEach((radio) => { radio.checked = radio.value === $('question-order').value; });
     $('question-editor').showModal();
     showClosedReview();
     $('question-editor').scrollTop = 0;
@@ -1867,6 +1878,7 @@
     renderEditor();
     $('question-list').lastElementChild.querySelector('textarea').focus();
   });
+  $('question-order').addEventListener('change', () => { resetRound(); rememberBank(); });
   $('no-repeat').addEventListener('change', resetRound);
   $('reset').addEventListener('click', () => {
     if (isGame()) configurePlayers();

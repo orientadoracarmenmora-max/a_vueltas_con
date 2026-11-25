@@ -1264,3 +1264,8 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
   #stage .play-area .clock-caption { font-size: .48rem; letter-spacing: .07em; }
   #stage .play-area .timer-panel[data-expired] #timer-value { font-size: .62rem; }
 }
+
+.question-order-choice { margin: 1.5rem 0 1rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); }
+.question-order-choice legend { padding: 0 .35rem; font-weight: 700; }
+.question-order-choice .check { margin: .65rem 0; gap: .65rem; }
+#question-order { margin-bottom: .8rem; }

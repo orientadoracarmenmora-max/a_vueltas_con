@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf5ef">
   <title>A vueltas con…</title>
-  <link rel="stylesheet" href="estilos.css?v=imagenes-20261119-55">
-  <script src="ruleta.js?v=imagenes-20261119-55" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=orden-20261125-56">
+  <script src="ruleta.js?v=orden-20261125-56" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#stage">Ir a la ruleta</a>
@@ -99,6 +99,8 @@ D) Basalto</pre><ol class="guide-steps"><li>Elige <b>Tipo test</b> y pulsa <b>A�
           <div id="question-list"></div>
           <button class="quiet add" id="add" type="button">＋ Añadir pregunta</button>
         </details>
+          <label for="question-order">Orden de las preguntas</label>
+          <select id="question-order"><option value="random">Aleatorio</option><option value="list">En el orden de la lista</option></select>
           <label class="check"><input id="no-repeat" type="checkbox" checked> Sin repeticiones</label>
           </div>
           <div>
@@ -182,6 +184,7 @@ C) Pulsando Mostrar respuesta</pre>
               <p class="hint">Puedes editar el bloque de arriba o las tarjetas de abajo: los cambios se actualizan en ambos sitios. La × del enunciado elimina la pregunta completa. La × de una respuesta elimina solo esa respuesta. El ＋ de la derecha permite añadir, cambiar o quitar una imagen.</p>
 <div id="quiz-draft-list"></div>
 <button class="quiet full" id="draft-add" type="button">＋ Añadir pregunta</button>
+              <fieldset class="question-order-choice"><legend>¿En qué orden quieres que salgan?</legend><label class="check"><input type="radio" name="draft-question-order" value="random" checked> Aleatorio</label><label class="check"><input type="radio" name="draft-question-order" value="list"> En el orden de la lista</label></fieldset>
               <button class="primary full" id="save-quiz-draft" type="button">Importar preguntas</button>
             </div>
             <p class="notice" id="import-notice" role="status"></p>
