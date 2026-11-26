@@ -1312,3 +1312,10 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 @media (min-width: 900px) {
   #stage:is(:fullscreen, .projected) .play-area #spin { margin-top: .9rem; }
 }
+
+/* Give the prompt a modest hierarchy over the answer options. */
+#stage #question {
+  font-size: calc(var(--question-answer-size) * 1.16);
+  font-weight: 650;
+  line-height: 1.4;
+}
