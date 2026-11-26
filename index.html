@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf5ef">
   <title>A vueltas con…</title>
-  <link rel="stylesheet" href="estilos.css?v=orden-20261125-56">
-  <script src="ruleta.js?v=orden-20261125-56" defer></script>
+  <link rel="stylesheet" href="estilos.css?v=etiquetas-20261126-58">
+  <script src="ruleta.js?v=etiquetas-20261126-58" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#stage">Ir a la ruleta</a>
@@ -136,6 +136,7 @@ D) Basalto</pre><ol class="guide-steps"><li>Elige <b>Tipo test</b> y pulsa <b>A�
               </label>
               <p class="hint" id="open-bank-help">Elige una lista de la ruleta (.json) o un texto (.txt). Las listas guardadas cambian automáticamente al modo correspondiente, aunque las abras desde otro modo.</p>
             </div>
+            <fieldset class="question-order-choice"><legend>¿En qué orden quieres que aparezcan?</legend><label class="check"><input type="radio" name="draft-question-order" value="random" checked> Aleatorio</label><label class="check"><input type="radio" name="draft-question-order" value="list"> En el orden de la lista</label></fieldset>
             <div id="open-import" hidden>
               <label for="source">Pega aquí tu lista</label>
               <p class="hint" id="source-help">Al importar se sustituye la lista actual.</p>
@@ -184,7 +185,7 @@ C) Pulsando Mostrar respuesta</pre>
               <p class="hint">Puedes editar el bloque de arriba o las tarjetas de abajo: los cambios se actualizan en ambos sitios. La × del enunciado elimina la pregunta completa. La × de una respuesta elimina solo esa respuesta. El ＋ de la derecha permite añadir, cambiar o quitar una imagen.</p>
 <div id="quiz-draft-list"></div>
 <button class="quiet full" id="draft-add" type="button">＋ Añadir pregunta</button>
-              <fieldset class="question-order-choice"><legend>¿En qué orden quieres que salgan?</legend><label class="check"><input type="radio" name="draft-question-order" value="random" checked> Aleatorio</label><label class="check"><input type="radio" name="draft-question-order" value="list"> En el orden de la lista</label></fieldset>
+              
               <button class="primary full" id="save-quiz-draft" type="button">Importar preguntas</button>
             </div>
             <p class="notice" id="import-notice" role="status"></p>
@@ -225,7 +226,9 @@ C) Pulsando Mostrar respuesta</pre>
       <section class="card appearance" aria-labelledby="appearance-title">
         <h2 id="appearance-title">Apariencia</h2>
         <div class="appearance-fields">
-          <div><label for="theme">Tema</label><select id="theme">
+          <div><label for="wheel-labels">En la ruleta</label>
+          <select id="wheel-labels"><option value="questions">Preguntas</option><option value="numbers">Números</option></select>
+          <label for="theme">Tema</label><select id="theme">
             <option value="rosa">Empolvado</option>
             <option value="bosque">Bosque</option>
             <option value="oceano">Océano</option>

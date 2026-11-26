@@ -700,11 +700,11 @@
     const radius = wheelSize / 2 - 2;
     const space = radius * .37 * 2 * Math.sin(Math.PI / Math.max(2, pool.length));
     const fewQuestions = pool.length <= 4;
-    const size = fewQuestions ? 40 : Math.min(49, space * .62);
-    const maxLines = fewQuestions ? 4 : Math.max(1, Math.min(3, Math.floor(space / (size * 1.16))));
+    const size = fewQuestions ? 36 : Math.min(40, space * .48);
+    const maxLines = fewQuestions ? 5 : Math.max(1, Math.min(4, Math.floor(space / (size * 1.13))));
     const family = getComputedStyle(root).getPropertyValue('--display').trim() || "'Josefin Sans', Arial, sans-serif";
     measure.font = `${root.dataset.font === 'fiona' ? 400 : 700} ${size}px ${family}`;
-    const maxWidth = radius * (fewQuestions ? .58 : .52);
+    const maxWidth = radius * .64;
     wheelText = { family, size, lines: pool.map(({ question }) => wrapWheelText(question, maxWidth, maxLines)) };
   }
 
@@ -713,7 +713,7 @@
     const radius = center - 2;
     const slice = turn / pool.length;
     const unique = $('no-repeat').checked;
-    const showQuestions = true;
+    const showQuestions = $('wheel-labels').value !== 'numbers';
     const distance = radius * (showQuestions && pool.length <= 4 ? .59 : .65);
     const sectors = document.createDocumentFragment();
     const labels = document.createDocumentFragment();
@@ -1878,6 +1878,7 @@
     renderEditor();
     $('question-list').lastElementChild.querySelector('textarea').focus();
   });
+  $('wheel-labels').addEventListener('change', () => { prepareWheelText(); rebuildWheel(); });
   $('question-order').addEventListener('change', () => { resetRound(); rememberBank(); });
   $('no-repeat').addEventListener('change', resetRound);
   $('reset').addEventListener('click', () => {
