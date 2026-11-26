@@ -1308,3 +1308,7 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
   #stage:is(:fullscreen, .projected) .scoreboard #scores[data-count="2"] { max-width: 28rem; }
   #stage:is(:fullscreen, .projected) .play-area .timer-panel { align-self: center; margin-block: 0; }
 }
+
+@media (min-width: 900px) {
+  #stage:is(:fullscreen, .projected) .play-area #spin { margin-top: .9rem; }
+}
