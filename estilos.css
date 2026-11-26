@@ -1271,7 +1271,7 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 #question-order { margin-bottom: .8rem; }
 
 /* Soft, matching answer colours for each theme. */
-:root { --choice-bg: #efc4b6; }
+:root { --choice-bg: #f2d5bc; }
 :root[data-theme="bosque"] { --choice-bg: #e3edd8; }
 :root[data-theme="oceano"] { --choice-bg: #dceff7; }
 :root[data-theme="flor"] { --choice-bg: #efdfef; }
