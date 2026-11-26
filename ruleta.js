@@ -701,7 +701,7 @@
     const space = radius * .37 * 2 * Math.sin(Math.PI / Math.max(2, pool.length));
     const fewQuestions = pool.length <= 4;
     const size = fewQuestions ? 36 : Math.min(40, space * .48);
-    const maxLines = fewQuestions ? 5 : Math.max(1, Math.min(4, Math.floor(space / (size * 1.13))));
+    const maxLines = 2;
     const family = getComputedStyle(root).getPropertyValue('--display').trim() || "'Josefin Sans', Arial, sans-serif";
     measure.font = `${root.dataset.font === 'fiona' ? 400 : 700} ${size}px ${family}`;
     const maxWidth = radius * .64;
