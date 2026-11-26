@@ -1269,3 +1269,16 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 .question-order-choice legend { padding: 0 .35rem; font-weight: 700; }
 .question-order-choice .check { margin: .65rem 0; gap: .65rem; }
 #question-order { margin-bottom: .8rem; }
+
+/* Soft, matching answer colours for each theme. */
+:root { --choice-bg: #f7e1e4; }
+:root[data-theme="bosque"] { --choice-bg: #e3edd8; }
+:root[data-theme="oceano"] { --choice-bg: #dceff7; }
+:root[data-theme="flor"] { --choice-bg: #efdfef; }
+:root:is([data-theme="petroleo"], [data-theme="brujula"]) { --choice-bg: #d9eeea; }
+:root[data-theme="feria"] { --choice-bg: #fae9c7; }
+:root:not([data-contrast="dark"]):not([data-contrast="light"]) .closed-choices button:not([data-verdict]) {
+  background: var(--choice-bg);
+  color: var(--ink);
+}
+#spin > span[aria-hidden="true"] { display: inline-block; transform: rotate(180deg); }
