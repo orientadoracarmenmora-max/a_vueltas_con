@@ -1878,7 +1878,7 @@
     renderEditor();
     $('question-list').lastElementChild.querySelector('textarea').focus();
   });
-  $('wheel-labels').addEventListener('change', () => { prepareWheelText(); rebuildWheel(); });
+  $('wheel-labels').addEventListener('change', () => { prepareWheelText(); paint(); });
   $('question-order').addEventListener('change', () => { resetRound(); rememberBank(); });
   $('no-repeat').addEventListener('change', resetRound);
   $('reset').addEventListener('click', () => {
