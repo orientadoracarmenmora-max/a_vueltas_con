@@ -1286,7 +1286,7 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 /* Roomier projected layout on classroom screens. */
 @media (min-width: 900px) {
   #stage:is(:fullscreen, .projected) .stage-card {
-    --wheel-diameter: clamp(15rem, min(58vh, calc(100vh - 25rem), 36vw), 48rem);
+    --wheel-diameter: clamp(15rem, min(58vh, calc(100vh - 29rem), 36vw), 48rem);
     grid-template-areas: "heading heading heading" "speech speech speech" "wheel timer question" "spin timer question" "score . question" "actions actions actions";
     grid-template-columns: minmax(0, var(--wheel-diameter)) clamp(5rem, 8vw, 8rem) minmax(0, 42vw);
     grid-template-rows: auto auto auto auto 1fr auto;
@@ -1307,11 +1307,11 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 }
 @media (min-width: 900px) and (min-height: 850px) {
   #stage:is(:fullscreen, .projected) .stage-card {
-    --wheel-diameter: clamp(22rem, min(58vh, calc(100vh - 23rem), 36vw), 48rem);
+    --wheel-diameter: clamp(22rem, min(58vh, calc(100vh - 32rem), 36vw), 48rem);
   }
 }
 @media (min-width: 900px) and (max-height: 780px) {
   #stage:is(:fullscreen, .projected) .stage-card:has(#scores:is([data-count="5"], [data-count="6"], [data-count="7"], [data-count="8"])) {
-    --wheel-diameter: clamp(12rem, min(42vh, calc(100vh - 27rem), 34vw), 32rem);
+    --wheel-diameter: clamp(12rem, min(42vh, calc(100vh - 32rem), 34vw), 32rem);
   }
 }
