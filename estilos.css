@@ -1272,13 +1272,13 @@ html[data-contrast="light"] .timer-panel { background: var(--surface); border-co
 
 /* Soft, matching answer colours for each theme. */
 :root { --choice-bg: #f2d5bc; }
-:root[data-theme="bosque"] { --choice-bg: #e3edd8; }
-:root[data-theme="oceano"] { --choice-bg: #dceff7; }
-:root[data-theme="flor"] { --choice-bg: #efdfef; }
-:root:is([data-theme="petroleo"], [data-theme="brujula"]) { --choice-bg: #d9eeea; }
-:root[data-theme="feria"] { --choice-bg: #fae9c7; }
+:root[data-theme="bosque"] { --choice-bg: #e2cea1; }
+:root[data-theme="oceano"] { --choice-bg: #9fd4e5; }
+:root[data-theme="flor"] { --choice-bg: #e5eed7; }
+:root:is([data-theme="petroleo"], [data-theme="brujula"]) { --choice-bg: #824223; --choice-ink: #fffaf4; }
+:root[data-theme="feria"] { --choice-bg: #efd1c3; }
 :root:not([data-contrast="dark"]):not([data-contrast="light"]) .closed-choices button:not([data-verdict]) {
   background: var(--choice-bg);
-  color: var(--ink);
+  color: var(--choice-ink, var(--ink));
 }
 #spin > span[aria-hidden="true"] { display: inline-block; transform: rotate(180deg); }
