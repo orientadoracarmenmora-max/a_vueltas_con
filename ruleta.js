@@ -189,6 +189,8 @@
   let currentQuestion = '';
   const speech = 'SpeechSynthesisUtterance' in window ? window.speechSynthesis : null;
   let utterance = null;
+  const phonon = createPhononReader({report:()=>{}});
+  let phononJob;
   let speechPauseTimeout;
   let speechStartTimeout;
   let speakingFrom = '';
@@ -1288,13 +1290,21 @@
   function refreshVoices() {
     const select = $('voice');
     const { voices, automatic } = spanishVoiceOptions(speech?.getVoices() || [], navigator.userAgent);
-    const mobile = isAppleMobile();
-    const label = automatic && !mobile ? `Automática · ${automatic.name}` : 'Automática · Español de España';
-    select.replaceChildren(new Option(label, ''));
-    for (const voice of voices) select.add(new Option(`${voice.name} (${voice.lang})`, voice.voiceURI));
-    const selected = voices.find((voice) => voice.voiceURI === preferredVoice);
-    if (selected) select.value = preferredVoice;
-    return selected || automatic;
+    const google = voices.find(voice => voiceName(voice).includes('google'));
+    const option = new Option(googleChromeLabel, 'google');
+    option.disabled = !google;
+    select.replaceChildren(option, phononOptions(), new Option('Voz del dispositivo', 'device'));
+    for (const voice of voices) {
+      if (!voiceName(voice).includes('google') && !/mexic/i.test(voiceName(voice))) {
+        select.add(new Option(`${voice.name} (${voice.lang})`, voice.voiceURI));
+      }
+    }
+    const saved = [...select.options].find(item => item.value === preferredVoice && !item.disabled);
+    select.value = saved?.value ?? (browserVoicePreference(navigator.userAgent) === 'google' && google ? 'google' : 'phonon:Noa');
+    return select.value === 'google' ? google
+      : voices.find(voice => voice.voiceURI === select.value)
+      || voices.find(voice => voice.localService && !/google|mexic/i.test(voiceName(voice)))
+      || (voiceName(automatic ?? {name:''}).includes('mexic') ? undefined : automatic);
   }
 
   function isAppleMobile() {
@@ -1358,6 +1368,8 @@
   }
 
   function stopSpeech() {
+    phononJob?.abort();
+    phononJob = null;
     clearTimeout(speechStartTimeout);
     clearTimeout(speechPauseTimeout);
     pendingSpeechFrom = '';
@@ -1374,10 +1386,6 @@
     const wasSpeaking = speakingFrom === control || pendingSpeechFrom === control;
     stopSpeech();
     if (wasSpeaking || !text) return;
-    if (!speech) {
-      $('speech-status').textContent = 'Este navegador no ofrece lectura en voz alta.';
-      return;
-    }
     let parts = (Array.isArray(text) ? text : [text]).filter((part) => part.trim());
     // Keep iOS reading in the original tap, without delayed follow-up utterances.
     if (isAppleMobile()) parts = [parts.map(part => /[.!?…]$/.test(part.trim()) ? part.trim() : `${part.trim()}.`).join(' ')] ;
@@ -1385,6 +1393,27 @@
     let partIndex = 0;
     const voice = refreshVoices();
     const unavailable = 'La lectura no ha podido iniciarse. Vuelve a tocar el botón o elige otra voz en «Elegir voz y velocidad».';
+    const selected = $('voice').value;
+    if (selected.startsWith('phonon:')) {
+      const job = new AbortController();
+      phononJob = job;
+      speakingFrom = control;
+      updateSpeechControls();
+      const narration = parts.map(part => /[.!?…]$/.test(part.trim()) ? part.trim() : part.trim() + '.').join(' ');
+      void phonon.play(narration, selected.slice(7), Number($('rate').value) || 1, job.signal)
+        .then(() => { if (phononJob === job) stopSpeech(); })
+        .catch(() => {
+          if (phononJob !== job) return;
+          stopSpeech();
+          if (speech) { pendingSpeechFrom = control; read(voice); }
+          else $('speech-status').textContent = unavailable;
+        });
+      return;
+    }
+    if (!speech) {
+      $('speech-status').textContent = 'Este navegador no ofrece lectura en voz alta.';
+      return;
+    }
     pendingSpeechFrom = control;
 
     function read(selectedVoice) {
@@ -2032,24 +2061,26 @@
     if (!guide.open) guide.showModal();
   });
   $('listen-rules').addEventListener('click', () => speak(rulesText(), 'rules'));
-  $('listen').addEventListener('click', () => {
-    const parts = [currentQuestion];
+  function questionSpeech() {
+    const parts = [currentQuestion || ''];
     if (closedMode() && currentEntry) {
       entryOptions(currentEntry).forEach((answer, index) => {
         if (!answer.trim()) return;
         parts.push(isQuiz() ? `Opción ${optionLetter(index)}.` : `Opción ${index + 1}.`, answer);
       });
     }
-    speak(parts, 'listen');
-  });
+    return parts;
+  }
+  $('listen').addEventListener('click', () => speak(questionSpeech(), 'listen'));
   $('listen-answer').addEventListener('click', () => {
     const solution = closedMode() && currentEntry
       ? entryOptions(currentEntry)[isQuiz() ? currentEntry.correct : currentEntry.binaryCorrect]
       : currentAnswer;
     speak(solution || '', 'answer');
   });
-  $('test-voice').addEventListener('click', () => speak('Así se escucharán las preguntas de la ruleta.', 'test-voice'));
+  $('test-voice').addEventListener('click', () => speak(currentQuestion ? questionSpeech() : rulesText(), 'test-voice'));
   $('voice').addEventListener('change', () => {
+    stopSpeech();
     preferredVoice = $('voice').value;
     saveVoicePreferences();
   });
